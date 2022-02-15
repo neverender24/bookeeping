@@ -2,7 +2,7 @@
     <div class="container-xl">
 			    <div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0"></h1>
+			            <h1 class="app-page-title mb-0">JEV List</h1>
 				    </div>
 				    <div class="col-auto">
 					     <div class="page-utilities">
@@ -45,22 +45,23 @@
                                 <tr v-for="item in data" :key="item.id">
                             
                                     <td>{{ item.fiscalyear }}</td>
-                                    <td>{{ item.FJEVDATE }}</td>
                                     <td>{{ item.FUND_SCODE }}</td>
                                     <td>{{ item.FJEVNO }}</td>
+                                    <td>{{ item.FJEVDATE }}</td>
+                                    <td>{{ item.FCHKNO }}</td>
                                     <td>{{ item.FPAYEE }}</td>
                                     <td>{{ item.FREMK }}</td>
 
                                     
                                     <td>
-                                        <!-- <button> -->
-                                            <a class="dropdown-item" href="#">
+                                       
+                                            <button class="dropdown-item" @click="show_details(item)">
                                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"></path>
                                                     <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
-                                                </svg>View
-                                            </a>
-                                        <!-- </button> -->
+                                                </svg>View</button>
+                                            
+                                       
                                     </td>
                                 </tr>
                             </tbody>
@@ -97,7 +98,9 @@
                         </select>
                     </div>
                 </div>
-			    <modal v-if="primaryModal"></modal>
+			    <modal v-if="primaryModal" ></modal>
+
+            <modal-details v-if="showDetails!= ''" :details ="jev_details"></modal-details>
 		    </div>
 </template>
 
@@ -105,11 +108,15 @@
 import Datatable from "../../helpers/datatable";
 import Pagination from "../../helpers/pagination";
 import { mapState, mapGetters } from "vuex";
+import ModalDetails from "../jevDetails/index";
+import AdvancedFilter from "./advanceFilter.vue";
 
 export default {
     components: {
         datatable: Datatable,
         pagination: Pagination,
+        modalDetails: ModalDetails,
+        advancedFilter: AdvancedFilter,
         
     },
 
@@ -126,12 +133,13 @@ export default {
 
         let columns = [
             
+            { width: "5%", label: "Fiscal Year", name: "fiscalyear" },
             { width: "10%", label: "Fund Detail Code", name: "FUND_SCODE" },
-            { width: "10%", label: "Fiscal Year", name: "fiscalyear" },
-            { width: "10%", label: "JEV Date", name: "FJEVDATE " },
             { width: "10%", label: "JEV Number", name: "FJEVNO " },
+            { width: "10%", label: "JEV Date", name: "FJEVDATE " },
+             { width: "10%", label: "Check No.", name: ".FCHKNO " },
             { width: "10%", label: "Payee", name: "FPAYEE" },
-            { width: "10%", label: "Remarks", name: "FREMK" },
+            { width: "20", label: "Particulars", name: "FREMK" },
             { width: "10%", label: "Action", name: "action" }, 
         ];
 
@@ -163,6 +171,8 @@ export default {
             },
             data: [],
             filtering: false,
+             showDetails: "",
+             jev_details: {}
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -189,6 +199,7 @@ export default {
         this.getData();
     },
 
+
     methods: {
         configPagination(data) {
             this.pagination.lastPage = data.last_page;
@@ -202,6 +213,7 @@ export default {
         },
 
         async getData(url = "jevh/index") {
+              this.showDetails = "";
             let loader = this.$loading.show();
             await axios.post(url, this.tableData).then((response) => {
                 let data = response.data;
@@ -213,6 +225,14 @@ export default {
 
                 loader.hide()
             });
+        },
+
+            
+        show_details(item) {
+        console.log(this.showDetails)
+        this.showDetails = "show"
+        this.jev_details = item
+    
         },
         // end of datatable pagination functions
        

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>HAW</title>
+    <title>Bookeeping</title>
 
     <!-- Meta -->
     <meta charset="utf-8">

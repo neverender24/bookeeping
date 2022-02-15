@@ -57,3 +57,15 @@ Route::prefix('employee')->group(function () {
 Route::prefix('jevh')->group(function (){
     Route::post('index', 'JevhController@index');
 });
+
+Route::prefix('jevd')->group(function (){
+    Route::post('index', 'JevdController@index');
+    Route::post('jevDetails', 'JevdController@jevDetails');
+
+});
+
+Route::prefix('fundDetails')->group(function (){
+    Route::get('getFundDetails', 'FundDetailsController@getFundDetails');
+   
+
+});
