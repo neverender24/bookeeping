@@ -34,7 +34,7 @@
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
                 
-			   <advanced-filter v-if="filtering" @filterNow="getData()"></advanced-filter>
+			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
                 <download-excel 
                     class="btn btn-warning d-none"
                     :data="exportData" 
@@ -42,6 +42,7 @@
                     type="xlsx"
                 >
                 </download-excel>
+                <button @click="reset()">Res</button>
                 <button class="btn btn-sm btn-warning" @click="_export()"> Download Data </button>
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
 			        <div class="card-body">
@@ -203,6 +204,9 @@ export default {
             this.getData()
         },
         
+        filterData() {
+            return this.filterData
+        }
     },
 
     mounted() {
@@ -224,10 +228,10 @@ export default {
 
         async getData(url = "jevh/index") {
               this.showDetails = "";
-
             let loader = this.$loading.show();
 
-            _.assign(this.tableData, this.filterData)
+
+            _.assign(this.tableData, this.filterData) 
 
             await axios.post(url, this.tableData).then((response) => {
                 let data = response.data;

@@ -23,7 +23,7 @@
                                     </div>
 
                                      <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="details.FUND_SCODE" >
+                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="fundstype[details.FUND_SCODE]" >
                                         <label for="floatingInput">FUND</label>
                                     </div>
 
@@ -234,6 +234,10 @@ export default {
                 4:"General",
                 5:"ADA",
                 6:"Procurement"
+            },
+            fundstype: {
+                101:"General Fund - Land Bank Tgm.Acct.(101)",
+                105:"General Fund - LBP Nab.Acct.(105)"
             },
             //end of datatable variables.
             //you can add below other variables.

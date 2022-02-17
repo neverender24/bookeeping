@@ -16,7 +16,7 @@ class JevhController extends Controller
     }
     public function index(Request $request)
     {
-
+        
         $sortField     =  $request->sortBy;
 		$length         = $request->length;
         $searchValue    = $request->search;
