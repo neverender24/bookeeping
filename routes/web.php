@@ -26,36 +26,9 @@ Route::patch('update_users', 'UserController@update_users');
 Route::post('edit_user', 'UserController@edit_user');
 Route::post('delete_user', 'UserController@delete_user');
 
-/**
- * PPMP's ROUTE
- */
-Route::prefix('ppmp')->group(function () {
-    Route::post('index', 'PpmpController@index');
-    Route::post('store', 'PpmpController@store');
-    Route::patch('update', 'PpmpController@update');
-    Route::post('edit', 'PpmpController@edit');
-    Route::post('delete', 'PpmpController@delete');
-});
-/**
- * PPMP ITEMS ROUTE
- */
-Route::prefix('ppmp/items')->group(function () {
-    Route::post('index', 'PpmpItemController@index');
-    Route::post('store', 'PpmpItemController@store');
-    Route::patch('update', 'PpmpItemController@update');
-    Route::post('edit', 'PpmpItemController@edit');
-    Route::post('delete', 'PpmpItemController@delete');
-});
-
-Route::prefix('employee')->group(function () {
-    Route::post('index', 'EmployeeController@index');
-    Route::post('store', 'EmployeeController@store');
-    Route::post('edit', 'EmployeeController@edit');
-    Route::patch('update', 'EmployeeController@update');
-    Route::post('delete', 'EmployeeController@delete');
-});
 Route::prefix('jevh')->group(function (){
     Route::post('index', 'JevhController@index');
+    Route::post('export', 'JevhController@export');
 });
 
 Route::prefix('jevd')->group(function (){
@@ -66,6 +39,7 @@ Route::prefix('jevd')->group(function (){
 
 Route::prefix('fundDetails')->group(function (){
     Route::get('getFundDetails', 'FundDetailsController@getFundDetails');
-   
-
 });
+
+Route::post('get-funds', 'FundController@getAllFunds');
+Route::post('get-fund-details', 'FundDetailsController@getFundDetails');

@@ -10,6 +10,7 @@ class FundDetails extends Model
     use HasFactory;
     protected $table = "funds_details";
     protected $guarded = [];
+    protected $primaryKey = "recid";
 
     public function fundDetails()
     {

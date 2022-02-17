@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jevh;
+use App\Exports\JevhExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JevhController extends Controller
 {
@@ -18,7 +21,44 @@ class JevhController extends Controller
 		$length         = $request->length;
         $searchValue    = $request->search;
 
-        $index = $this->model->orderBy('recid', 'desc');
+        $index = $this->model;
+
+        if ($request->FUND_SCODE) {
+            $index = $index->where('FUND_SCODE', $request->FUND_SCODE);
+        }
+
+        if ($request->FJEVNO) {
+            $index = $index->where('FJEVNO', 'like' , '%'.$request->FJEVNO.'%');
+        }
+
+        if ($request->FCHKNO) {
+            $index = $index->where('FCHKNO', 'like' , '%'.$request->FCHKNO.'%');
+        }
+
+        if ($request->FREFNO) {
+            $index = $index->where('FREFNO', 'like' , '%'.$request->FREFNO.'%');
+        }
+
+        if ($request->FJEVTYP) {
+            $index = $index->where('FJEVTYP', 'like' , '%'.$request->FJEVTYP.'%');
+        }
+
+        if ($request->FPAYEE) {
+            $index = $index->where('FPAYEE', 'like' , '%'.$request->FPAYEE.'%');
+        }
+        
+        if (($request->from && !$request->to) || ($request->to && !$request->from)) {
+            
+            $date = $request->from ? $request->from : $request->to;
+
+            $index = $index->whereDate('FJEVDATE', $date);
+        } 
+        if($request->from && $request->to) {
+            $index = $index->whereBetween('FJEVDATE', [$request->from, $request->to]);
+        }
+        
+        $index = $index->orderBy('FJEVDATE', 'asc');
+        
     
         if ($sortField) {
             $index = $this->model->orderBy($sortField, 'asc');
@@ -34,8 +74,17 @@ class JevhController extends Controller
     public function search($collection, $searchValue) {
         if ($searchValue) {
             return $collection->where(function($query) use($searchValue){
-                $query->orWhere('name','LIKE','%'.$searchValue.'%');
+                $query->orWhere('fiscalyear','LIKE','%'.$searchValue.'%');
             });
         }
+    }
+    public function getJevtype()
+    {
+        return $this->model->select(DB::raw('TRIM(FJEVTYP) as FJEVTYP'))->get();
+    }
+
+    public function export() 
+    {
+        return Excel::download(new JevhExport, 'test.xlsx');
     }
 }

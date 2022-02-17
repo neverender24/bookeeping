@@ -33,25 +33,25 @@ class JevdController extends Controller
     public function jevDetails(Request $request)
     {
         $details = DB::table('jevd')
-        ->select('jevd.*','chartofaccounts.FTITLE','subaccounts1.FTITLE','subaccounts2.FSTITLE2')
-	->leftJoin('chartofaccounts', function ($query) {
-            $query->on('chartofaccounts.FACTCODE', '=', 'jevd.FACTCODE')
-            	->on('jevd.fiscalyear', '>=', 'chartofaccounts.fiscalyear')
-            	->on('jevd.fiscalyear', '<=', 'chartofaccounts.fiscalyear_to');
-        })
-        ->leftJoin('subaccounts1', function ($query) {
-            $query->on('subaccounts1.FACTCODE', '=', 'jevd.FACTCODE')
-            	->on('subaccounts1.FSUBCDE', '=', 'jevd.FSUBCDE');
-        })
-        ->leftJoin('subaccounts2', function ($query) {
-            $query->on('subaccounts2.FACTCODE', '=', 'jevd.FACTCODE')
-            	->on('subaccounts2.FSUBCDE', '=', 'jevd.FSUBCDE')
-            	->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
-        })
-        ->where('jevd.FJEVNO','=',$request->FJEVNO)
-        ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
-        ->where('jevd.fiscalyear','=',$request->fiscalyear)
-        ->get();
+                    ->select('jevd.*','chartofaccounts.FTITLE','subaccounts1.FTITLE','subaccounts2.FSTITLE2')
+                    ->leftJoin('chartofaccounts', function ($query) {
+                        $query->on('chartofaccounts.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('jevd.fiscalyear', '>=', 'chartofaccounts.fiscalyear')
+                            ->on('jevd.fiscalyear', '<=', 'chartofaccounts.fiscalyear_to');
+                    })
+                    ->leftJoin('subaccounts1', function ($query) {
+                        $query->on('subaccounts1.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('subaccounts1.FSUBCDE', '=', 'jevd.FSUBCDE');
+                    })
+                    ->leftJoin('subaccounts2', function ($query) {
+                        $query->on('subaccounts2.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('subaccounts2.FSUBCDE', '=', 'jevd.FSUBCDE')
+                            ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
+                    })
+                    ->where('jevd.FJEVNO','=',$request->FJEVNO)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->where('jevd.fiscalyear','=',$request->fiscalyear)
+                    ->get();
         
             return $details;
        
@@ -62,7 +62,7 @@ class JevdController extends Controller
     public function search($collection, $searchValue) {
         if ($searchValue) {
             return $collection->where(function($query) use($searchValue){
-                $query->orWhere('name','LIKE','%'.$searchValue.'%');
+                $query->orWhere('fiscalyear','LIKE','%'.$searchValue.'%');
             });
         }
     }

@@ -1,5 +1,5 @@
 <template>
-   <div id="details" class="modal fade" tabindex="-1">
+   <div id="details" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -7,7 +7,7 @@
                     <button
                         type="button"
                         class="btn-close"
-                        data-bs-dismiss="modal"
+                        @click="close_modal()"
                         aria-label="Close"
                     ></button>
                 </div>
@@ -23,7 +23,7 @@
                                     </div>
 
                                      <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="details" >
+                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="details.FUND_SCODE" >
                                         <label for="floatingInput">FUND</label>
                                     </div>
 
@@ -84,33 +84,20 @@
                         >
                             <tbody>
                                 <tr v-for="item in data" :key="item.id">
-                            
-                                    <!-- <td>{{ item.fiscalyear }}</td> -->
-                                    <!-- <td>{{ item.FUND_SCODE }}</td> -->
-                                    <!-- <td>{{ item.FJEVNO }}</td> -->
+                                    
+                                    <td>{{ item.FACTCODE }}</td>
                                     <td>{{ item.FSUBCDE }}</td>
                                     <td>{{ item.FSUBCDE2}}</td>
+                                    <td>{{ item.FRESPCTR}}</td>
+                                    <td>{{ item.FALOBNO}}</td>
                                     <td>{{ item.FDEBIT }}</td>
                                     <td>{{ item.FCREDIT }}</td>
-
-                                    
-                                    <!-- <td>
-                                       
-                                            <button class="dropdown-item" @click="show_details()">
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"></path>
-                                                    <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"></path>
-                                                </svg>View</button>
-                                            
-                                       
-                                    </td> -->
                                 </tr>
                             </tbody>
                         </datatable>
                                  </div>
                             </div>
                         </div>
-                        
                     </div>
 				</div>
                 <div class="row justify-content-evenly">
@@ -201,13 +188,14 @@ export default {
 
         let columns = [
             
-            // { width: "50%", label: "Fund Detail Code", name: "FUND_SCODE" },
-            { width: "10%", label: "SUBCODE", name: "FSUBCDE " },
-            { width: "10%", label: "SUBCODE2", name: "FSUBCDE2 " },
+            { width: "10%", label: "FACTCODE", name: "FACTCODE " },
+            { width: "10%", label: "FSUBCDE", name: "FSUBCDE " },
+            { width: "10%", label: "FSUBCDE2", name: "FSUBCDE2 " },
+            { width: "10%", label: "FRESPCTR", name: "FRESPCTR " },
+            { width: "10%", label: "FALOBNO", name: "FALOBNO" },
             { width: "10%", label: "DEBIT", name: "FDEBIT " },
             { width: "10%", label: "CREDIT", name: "FCREDIT " },
-           
-         
+            
         ];
 
         //end of pagination variables
@@ -262,10 +250,11 @@ export default {
     },
 
     mounted() {
-         this.myModal = new Modal(document.getElementById('details'))
-         $("#details").modal("show");
+
+        this.myModal = new Modal(document.getElementById('details'))
+        this.myModal.show();
+
         this.getData();
-        console.log (this.details)
         this.getFundDetails()
     },
 
@@ -282,9 +271,9 @@ export default {
         },
 
         close_modal() {
-            this.myModal.hide()
-            this.$store.commit('setPrimaryModalState')
-            this.$store.commit('clearEditData')
+            this.myModal.hide();
+            this.$store.commit('setJevhModalState', {title:"", isOpen:false})
+            
         },
 
         async getData(url = "jevd/jevDetails") {
@@ -299,7 +288,7 @@ export default {
                     // this.configPagination(response);
                 // }
 
-                // loader.hide()
+                 loader.hide()
             });
         },
 

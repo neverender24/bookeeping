@@ -8,10 +8,13 @@ export const store = new Vuex.Store({
     state: {
         searchBox: "",
         user: [],
+        filterData: {},
         primaryModal: false,
         primaryModalTitle: "",
         refreshTable: false,
         editData: [],
+        jevModalTitle:"",
+        jevModal:false,
         ppmpItems: {
             editDataPpmpItem: [],
             editModal: false,
@@ -28,10 +31,21 @@ export const store = new Vuex.Store({
         },
     },
     mutations: {
+        setFilterData(state, payload) {
+            state.filterData = payload
+        },
+
         setPrimaryModalState(state, payload) {
             state.primaryModalTitle = payload
             state.primaryModal = true
         },
+        
+        setJevhModalState(state, payload){
+
+            state.jevModalTitle = payload.title
+            state.jevModal = payload.isOpen
+        },
+        
         clearEditData(state) {
             state.primaryModal = false
             state.editData = []
