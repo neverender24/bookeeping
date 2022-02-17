@@ -13,7 +13,7 @@
                     <a class="app-logo" href="#"
                         ><img
                             class="logo-icon me-2 mb-2"
-                            src=""
+                            src="assets/images/ddo_logo.png"
                             alt="logo"
                         /> 
                            

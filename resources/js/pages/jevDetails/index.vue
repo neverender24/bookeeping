@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">JEV Details</h5>
+                    <h5 class="modal-title">Journal Entry Voucher</h5>
                     <button
                         type="button"
                         class="btn-close"
@@ -18,7 +18,7 @@
                             <div class = "row">
                                 <div class = "col-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="details.FJEVTYP" >
+                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
                                         <label for="floatingInput">JEV TYPE</label>
                                     </div>
 
@@ -53,7 +53,7 @@
                                     </div>
 
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" readonly style=" height:50%" v-model="details.FREMK" ></textarea>
+                                        <textarea class="form-control" readonly style="height: 100px" v-model="details.FREMK"></textarea>
                                         <label for="floatingInput">DESCRIPTION</label>
                                     </div>
 
@@ -68,7 +68,7 @@
                                     </div>
 
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FAPPVBY" >
+                                        <input type="text" class="form-control"  re adonly id="floatingInput"     v-model="details.FAPPVBY" >
                                         <label for="floatingInput">APPROVED BY</label>
                                     </div>
 
@@ -188,13 +188,13 @@ export default {
 
         let columns = [
             
-            { width: "10%", label: "FACTCODE", name: "FACTCODE " },
-            { width: "10%", label: "FSUBCDE", name: "FSUBCDE " },
-            { width: "10%", label: "FSUBCDE2", name: "FSUBCDE2 " },
-            { width: "10%", label: "FRESPCTR", name: "FRESPCTR " },
-            { width: "10%", label: "FALOBNO", name: "FALOBNO" },
-            { width: "10%", label: "DEBIT", name: "FDEBIT " },
-            { width: "10%", label: "CREDIT", name: "FCREDIT " },
+            { width: "10%", label: "ActCode", name: "FACTCODE "},
+            { width: "10%", label: "SubCodE", name: "FSUBCDE "},
+            { width: "10%", label: "SubCodE2", name: "FSUBCDE2 "},
+            { width: "10%", label: "RespCtr", name: "FRESPCTR "},
+            { width: "10%", label: "Voucher", name: "FALOBNO"},
+            { width: "10%", label: "Debit", name: "FDEBIT"},
+            { width: "10%", label: "Credit", name: "FCREDIT"},
             
         ];
 
@@ -227,6 +227,14 @@ export default {
             data: [],
             filtering: false,
             fundDetails: [],
+            jevtype:{
+                1:"Collection",
+                2:"Check Disbursement",
+                3:"Cash Disbursement",
+                4:"General",
+                5:"ADA",
+                6:"Procurement"
+            },
             //end of datatable variables.
             //you can add below other variables.
         };

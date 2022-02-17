@@ -2,7 +2,7 @@
     <div class="container-xl">
 			    <div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">JEV List</h1>
+			            <h1 class="app-page-title mb-0">Journal Entry Voucher List</h1>
 				    </div>
 				    <div class="col-auto">
 					     <div class="page-utilities">
@@ -35,7 +35,14 @@
 			    </div><!--//row-->
                 
 			   <advanced-filter v-if="filtering" @filterNow="getData()"></advanced-filter>
-
+                <download-excel 
+                    class="btn btn-warning d-none"
+                    :data="exportData" 
+                    id="exportId"
+                    type="xlsx"
+                >
+                </download-excel>
+                <button class="btn btn-sm btn-warning" @click="_export()"> Download Data </button>
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
 			        <div class="card-body">
                         <datatable
@@ -112,7 +119,7 @@ export default {
         datatable: Datatable,
         pagination: Pagination,
         modalDetails: ModalDetails,
-        advancedFilter: AdvancedFilter,
+        advancedFilter: AdvancedFilter, 
         
     },
 
@@ -168,7 +175,10 @@ export default {
             data: [],
             filtering: false,
              showDetails: "",
-             jev_details: {}
+             jev_details: {},
+             exportData:[],
+             fieldNames:{},
+         
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -238,6 +248,39 @@ export default {
             this.jev_details = item
     
         },
+
+        async _export(){
+            let loader = this.$loading.show();
+            var payload = this.filterData;
+            _.assign(this.filterData, {length:""})
+            await axios.post('jevh/index', payload).then((response) => {
+                this.exportData = response.data.data.data.map(row => {
+                    return {
+                        'Fiscal Year': row.fiscalyear,
+                        'Fund Detail Code': row.FUND_SCODE,
+                        'Jev Number': row.FJEVNO,
+                        'Date': row.FJEVDATE,
+                        'Check No.': row.FREFNO,
+                        'Payee': row.FPAYEE
+                    }
+
+                })
+
+                loader.hide()
+            });
+            this.fieldNames = {
+                "Fiscal Year": "exportData.fiscalyear",
+                "Fund Detail Code": "exportData.FUND_SCODE",
+                "Jev Number": "exportData.FJEVNO",
+                "Date": "exportData.FJEVDATE",
+                "Check No.": "exportData.FREFNO",
+                "Payee": "exportData.FPAYEE"    	
+                
+            }
+            var downloadData = document.getElementById('exportId');
+            downloadData.click();
+        },
+
         // end of datatable pagination functions
        
         advance_filtering() {

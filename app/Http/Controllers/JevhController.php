@@ -57,7 +57,7 @@ class JevhController extends Controller
             $index = $index->whereBetween('FJEVDATE', [$request->from, $request->to]);
         }
         
-        $index = $index->orderBy('FJEVDATE', 'asc');
+        $index = $index->orderBy('recid', 'desc');
         
     
         if ($sortField) {
@@ -83,8 +83,5 @@ class JevhController extends Controller
         return $this->model->select(DB::raw('TRIM(FJEVTYP) as FJEVTYP'))->get();
     }
 
-    public function export() 
-    {
-        return Excel::download(new JevhExport, 'test.xlsx');
-    }
+    
 }
