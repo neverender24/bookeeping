@@ -11,5 +11,8 @@ class Jevd extends Model
     protected $table = "jevd";
     protected $guarded = [];
 
-    
+    public function fundDetails()
+    {
+        return $this->hasMany(FundDetails::class, 'FUND_SCODE', 'FUND_SCODE');
+    }
 }

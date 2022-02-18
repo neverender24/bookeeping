@@ -57,7 +57,7 @@ class JevhController extends Controller
             $index = $index->whereBetween('FJEVDATE', [$request->from, $request->to]);
         }
         
-        $index = $index->orderBy('recid', 'desc');
+        $index = $index->orderBy('FJEVNO', 'asc');
         
     
         if ($sortField) {

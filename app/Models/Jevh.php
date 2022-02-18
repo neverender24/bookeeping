@@ -12,5 +12,6 @@ class Jevh extends Model
     protected $table = "jevh";
     protected $guarded = [];
     protected $primaryKey = "recid";
-
+    
+    
 }

@@ -1,9 +1,9 @@
 <template>
    <div id="details" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-fullscreen-xxl-down">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Journal Entry Voucher</h5>
+                    <h5 class="modal-title">Journal Entry Vouchers</h5>
                     <button
                         type="button"
                         class="btn-close"
@@ -23,7 +23,7 @@
                                     </div>
 
                                      <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="fundstype[details.FUND_SCODE]" >
+                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="fundDetailsName" >
                                         <label for="floatingInput">FUND</label>
                                     </div>
 
@@ -89,9 +89,12 @@
                                     <td>{{ item.FSUBCDE }}</td>
                                     <td>{{ item.FSUBCDE2}}</td>
                                     <td>{{ item.FRESPCTR}}</td>
+                                    <td>{{ item.FVOUCHNO}}</td>
                                     <td>{{ item.FALOBNO}}</td>
-                                    <td>{{ item.FDEBIT }}</td>
-                                    <td>{{ item.FCREDIT }}</td>
+                                    <td>{{ item.FPRNO}}</td>
+                                    <td>{{ item.jevdDebit}}</td>
+                                    <td>{{ item.jevdCredit }}</td>
+                                    <td>{{ item.FREMARKS }}</td>
                                 </tr>
                             </tbody>
                         </datatable>
@@ -189,12 +192,15 @@ export default {
         let columns = [
             
             { width: "10%", label: "ActCode", name: "FACTCODE "},
-            { width: "10%", label: "SubCodE", name: "FSUBCDE "},
-            { width: "10%", label: "SubCodE2", name: "FSUBCDE2 "},
-            { width: "10%", label: "RespCtr", name: "FRESPCTR "},
-            { width: "10%", label: "Voucher", name: "FALOBNO"},
+            { width: "10%", label: "SubCode", name: "FSUBCDE "},
+            { width: "10%", label: "SubCode2", name: "FSUBCDE2 "},
+            { width: "10%", label: "RespCtr", name: "FRESPCTR"},
+            { width: "10%", label: "Voucher", name: "FVOUCHNO"},
+            { width: "10%", label: "OBR #", name: "FALOBNO"},
+            { width: "10%", label: "PR #", name: "FPRNO"},
             { width: "10%", label: "Debit", name: "FDEBIT"},
             { width: "10%", label: "Credit", name: "FCREDIT"},
+            { width: "10%", label: "Remarks", name: "FREMARKS"},
             
         ];
 
@@ -224,6 +230,7 @@ export default {
                 from: "",
                 to: "",
             },
+            fundDetailsName:"",
             data: [],
             filtering: false,
             fundDetails: [],
@@ -234,10 +241,6 @@ export default {
                 4:"General",
                 5:"ADA",
                 6:"Procurement"
-            },
-            fundstype: {
-                101:"General Fund - Land Bank Tgm.Acct.(101)",
-                105:"General Fund - LBP Nab.Acct.(105)"
             },
             //end of datatable variables.
             //you can add below other variables.
@@ -253,6 +256,7 @@ export default {
         ...mapGetters([
             'isAdmin'
         ]),
+
     },
 
     watch: {
@@ -293,7 +297,6 @@ export default {
             let loader = this.$loading.show();
             await axios.post(url, this.details).then((response) => {
                 let data = response.data;
-                console.log(response.data)
 
                 // if (this.tableData.draw == data.draw) {
                     this.data = data;
@@ -302,6 +305,7 @@ export default {
 
                  loader.hide()
             });
+            this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
         },
 
         async getFundDetails(url = "fundDetails/getFundDetails") {

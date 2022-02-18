@@ -2,7 +2,7 @@
     <div class="container-xl">
 			    <div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">Journal Entry Voucher List</h1>
+			            <h1 class="app-page-title mb-0">Journal Entry Vouchers</h1>
 				    </div>
 				    <div class="col-auto">
 					     <div class="page-utilities">
@@ -42,7 +42,6 @@
                     type="xlsx"
                 >
                 </download-excel>
-                <button @click="reset()">Res</button>
                 <button class="btn btn-sm btn-warning" @click="_export()"> Download Data </button>
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
 			        <div class="card-body">
@@ -120,7 +119,7 @@ export default {
         datatable: Datatable,
         pagination: Pagination,
         modalDetails: ModalDetails,
-        advancedFilter: AdvancedFilter, 
+        advancedFilter: AdvancedFilter,
         
     },
 
@@ -179,7 +178,7 @@ export default {
              jev_details: {},
              exportData:[],
              fieldNames:{},
-         
+                tempFilter: {}
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -203,13 +202,10 @@ export default {
         refreshTable() {
             this.getData()
         },
-        
-        filterData() {
-            return this.filterData
-        }
     },
 
     mounted() {
+        this.tempFilter = this.filterData
         this.getData();
     },
 
@@ -230,7 +226,7 @@ export default {
               this.showDetails = "";
             let loader = this.$loading.show();
 
-
+            // delete this.tableData.FJEVNO
             _.assign(this.tableData, this.filterData) 
 
             await axios.post(url, this.tableData).then((response) => {
@@ -264,7 +260,7 @@ export default {
                         'Fund Detail Code': row.FUND_SCODE,
                         'Jev Number': row.FJEVNO,
                         'Date': row.FJEVDATE,
-                        'Check No.': row.FREFNO,
+                        'Check No.': row.FCHKNO,
                         'Payee': row.FPAYEE
                     }
 
@@ -277,7 +273,7 @@ export default {
                 "Fund Detail Code": "exportData.FUND_SCODE",
                 "Jev Number": "exportData.FJEVNO",
                 "Date": "exportData.FJEVDATE",
-                "Check No.": "exportData.FREFNO",
+                "Check No.": "exportData.FCHKNO",
                 "Payee": "exportData.FPAYEE"    	
                 
             }

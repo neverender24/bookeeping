@@ -81,8 +81,19 @@ export default {
             })
         },
         async refresh() {
-            this.filterData = {};
-            await this.$store.commit('setFilterData', {})
+            var filterData1 = {
+                
+                FJEVNO:"",
+                FUND_SCODE:"",
+                FCHKNO:"",
+                FREFNO:"",
+                from:"",
+                to:"",
+                FJEVTYP:"",
+                FPAYEE:"",
+
+            };
+            await this.$store.commit('setFilterData', filterData1)
             // await this.runFilter();
             this.$emit('refresh')
         },
