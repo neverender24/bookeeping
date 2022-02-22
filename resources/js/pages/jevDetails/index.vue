@@ -1,6 +1,6 @@
 <template>
    <div id="details" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen-xxl-down">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Journal Entry Vouchers</h5>
@@ -12,129 +12,95 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                     <div class="app-card app-card-orders-table shadow-sm mb-2">
-			        <div class="card-body">
-                        <div class="form-group row">
-                            <div class = "row">
-                                <div class = "col-4">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
-                                        <label for="floatingInput">JEV TYPE</label>
-                                    </div>
+                    <div class="app-card app-card-orders-table shadow-sm mb-2">
+			            <div class="card-body">
+                            <div class="form-group row">
+                                <div class = "row">
+                                    <div class = "col-3">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
+                                            <label for="floatingInput">JEV TYPE</label>
+                                        </div>
 
-                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"  v-model="fundDetailsName" >
-                                        <label for="floatingInput">FUND</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"  v-model="fundDetailsName" >
+                                            <label for="floatingInput">FUND</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"   v-model="details.FJEVNO" >
-                                        <label for="floatingInput">JEV Number</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"   v-model="details.FJEVNO" >
+                                            <label for="floatingInput">JEV Number</label>
+                                        </div>
 
-                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FJEVDATE" >
-                                        <label for="floatingInput">JEV Date</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FJEVDATE" >
+                                            <label for="floatingInput">JEV Date</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FCHKNO" >
-                                        <label for="floatingInput">CHECK #</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FCHKNO" >
+                                            <label for="floatingInput">CHECK #</label>
+                                        </div>
 
-                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FREFNO" >
-                                        <label for="floatingInput">REF #</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FREFNO" >
+                                            <label for="floatingInput">REF #</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FPAYEE" >
-                                        <label for="floatingInput">PAYEE</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FPAYEE" >
+                                            <label for="floatingInput">PAYEE</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" readonly style="height: 100px" v-model="details.FREMK"></textarea>
-                                        <label for="floatingInput">DESCRIPTION</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" style="height: 200px" readonly  v-model="details.FREMK"></textarea>
+                                            <label for="floatingInput">DESCRIPTION</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FPREPBY" >
-                                        <label for="floatingInput">PREPARED BY</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FPREPBY" >
+                                            <label for="floatingInput">PREPARED BY</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FPREPD" >
-                                        <label for="floatingInput">POSITION</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FPREPD" >
+                                            <label for="floatingInput">POSITION</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  re adonly id="floatingInput"     v-model="details.FAPPVBY" >
-                                        <label for="floatingInput">APPROVED BY</label>
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FAPPVBY" >
+                                            <label for="floatingInput">APPROVED BY</label>
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FAPPVD" >
-                                        <label for="floatingInput">POSITION</label>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FAPPVD" >
+                                            <label for="floatingInput">POSITION</label>
+                                        </div>
                                     </div>
-
+                                    <div class = "col-9">
+                                        <datatable :columns="columns">
+                                            <tbody>
+                                                <tr v-for="item in data" :key="item.id">
+                                                    <td>({{ item.FACTCODE }}) , {{ item.FTITLE }}</td>
+                                                    <td>({{ item.FSUBCDE }}) , {{ item.FSTITLE }}</td>
+                                                    <td>({{ item.FSUBCDE2 }}) , {{ item.FSTITLE2 }}</td>
+                                                    <td>{{ item.FRESPCTR}}</td>
+                                                    <td>{{ item.FVOUCHNO}}</td>
+                                                    <td>{{ item.FALOBNO}}</td>
+                                                    <td>{{ item.FPRNO}}</td>
+                                                    <td>{{ item.jevdDebit}}</td>
+                                                    <td>{{ item.jevdCredit }}</td>
+                                                    <td>{{ item.FREMARKS }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </datatable>
+                                    </div>
                                 </div>
-                                 <div class = "col-8">
-                                     <datatable
-                            :columns="columns"
-                        >
-                            <tbody>
-                                <tr v-for="item in data" :key="item.id">
-                                    
-                                    <td>{{ item.FACTCODE }}</td>
-                                    <td>{{ item.FSUBCDE }}</td>
-                                    <td>{{ item.FSUBCDE2}}</td>
-                                    <td>{{ item.FRESPCTR}}</td>
-                                    <td>{{ item.FVOUCHNO}}</td>
-                                    <td>{{ item.FALOBNO}}</td>
-                                    <td>{{ item.FPRNO}}</td>
-                                    <td>{{ item.jevdDebit}}</td>
-                                    <td>{{ item.jevdCredit }}</td>
-                                    <td>{{ item.FREMARKS }}</td>
-                                </tr>
-                            </tbody>
-                        </datatable>
-                                 </div>
                             </div>
                         </div>
-                    </div>
-				</div>
-                <div class="row justify-content-evenly">
-                    <div
-                        class="col-auto me-auto"
-                    >
-                        <pagination
-                            :pagination="pagination"
-                            @prev="getData(pagination.prevPageUrl)"
-                            @next="getData(pagination.nextPageUrl)"
-                        ></pagination>
-                    </div>
-                    <div class="col-auto me-auto">
-                        <p>
-                            {{ pagination.from }} to {{ pagination.to }} of
-                            {{ pagination.total }} entries
-                        </p>
-                    </div>
-                    <div class="col-auto">
-                        <select
-                            v-model="tableData.length"
-                            @change="getData()"
-                            class="form-select form-select-sm col-lg-1"
-                        >
-                            <option value="10" selected="selected">
-                                10
-                            </option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                        </select>
-                    </div>
-                </div>
-			    <modal v-if="primaryModal"></modal>
-           
+				    </div>
+			        <modal v-if="primaryModal"></modal>
+
 		    </div>
                    
                 <div class="modal-footer">
@@ -163,13 +129,11 @@
 <script>
 import { Modal } from 'bootstrap'
 import Datatable from "../../helpers/datatable";
-import Pagination from "../../helpers/pagination";
 import { mapState, mapGetters } from "vuex";
 
 export default {
     components: {
         datatable: Datatable,
-        pagination: Pagination,
       
         
     },
@@ -191,9 +155,9 @@ export default {
 
         let columns = [
             
-            { width: "10%", label: "ActCode", name: "FACTCODE "},
-            { width: "10%", label: "SubCode", name: "FSUBCDE "},
-            { width: "10%", label: "SubCode2", name: "FSUBCDE2 "},
+            { width: "10%", label: "ActCode/Title", name: "FACTCODE "},
+            { width: "10%", label: "SubCode/Title", name: "FSTITLE"},
+            { width: "10%", label: "SubCode2/Title", name: "FSTITLE2 "},
             { width: "10%", label: "RespCtr", name: "FRESPCTR"},
             { width: "10%", label: "Voucher", name: "FVOUCHNO"},
             { width: "10%", label: "OBR #", name: "FALOBNO"},
@@ -220,16 +184,7 @@ export default {
                 length: 5,
                 search: "",
             },
-            pagination: {
-                lastPage: "",
-                currentPage: "",
-                total: "",
-                lastPageUrl: "",
-                nextPageUrl: "",
-                prevPageUrl: "",
-                from: "",
-                to: "",
-            },
+
             fundDetailsName:"",
             data: [],
             filtering: false,
@@ -275,16 +230,6 @@ export default {
     },
 
     methods: {
-        configPagination(data) {
-            this.pagination.lastPage = data.last_page;
-            this.pagination.currentPage = data.current_page;
-            this.pagination.total = data.total;
-            this.pagination.lastPageUrl = data.last_page_url;
-            this.pagination.prevPageUrl = data.prev_page_url;
-            this.pagination.nextPageUrl = data.next_page_url;
-            this.pagination.from = data.from;
-            this.pagination.to = data.to;
-        },
 
         close_modal() {
             this.myModal.hide();

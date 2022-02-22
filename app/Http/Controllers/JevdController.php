@@ -37,6 +37,7 @@ class JevdController extends Controller
                         'jevd.*',
                         'chartofaccounts.FTITLE',
                         'subaccounts1.FTITLE',
+                        'subaccounts1.FSTITLE',
                         'subaccounts2.FSTITLE2',
                         'funds_details.FUNDDETAIL_NAME',
                         DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit')

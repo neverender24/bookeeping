@@ -14,13 +14,54 @@ class JevhController extends Controller
     {
         $this->model = $model;
     }
+
     public function index(Request $request)
     {
-        
-        $sortField     =  $request->sortBy;
 		$length         = $request->length;
         $searchValue    = $request->search;
 
+        $index = $this->getClause($request);
+
+        $index = $index->orderBy('FJEVNO', 'asc');
+        
+        $this->search($index, $searchValue);
+        
+        $index = $index->paginate($length);
+
+    	return ['data'=>$index, 'draw'=> $request->draw];
+    }
+
+    
+    public function search($collection, $searchValue) {
+        if ($searchValue) {
+            return $collection->where(function($query) use($searchValue){
+                $query->orWhere('fiscalyear','LIKE','%'.$searchValue.'%');
+            });
+        }
+    }
+    
+    public function getJevtype()
+    {
+        return $this->model->select(DB::raw('TRIM(FJEVTYP) as FJEVTYP'))->get();
+    }
+
+    public function export(Request $request)
+    {
+        $searchValue    = $request->search;
+
+        $index = $this->getClause($request);
+
+        $index = $index->orderBy('FJEVNO', 'asc');
+
+        $this->search($index, $searchValue);
+
+        $index = $index->get();
+
+        return ['data'=>$index, 'draw'=> $request->draw];
+    }
+    
+    public function getClause($request)
+    {
         $index = $this->model;
 
         if ($request->FUND_SCODE) {
@@ -56,32 +97,11 @@ class JevhController extends Controller
         if($request->from && $request->to) {
             $index = $index->whereBetween('FJEVDATE', [$request->from, $request->to]);
         }
-        
-        $index = $index->orderBy('FJEVNO', 'asc');
-        
-    
-        if ($sortField) {
-            $index = $this->model->orderBy($sortField, 'asc');
+        if ($request->sortBy) {
+            $index = $this->model->orderBy($request->sortBy, 'asc');
         }
-
-        $this->search($index, $searchValue);
         
-        $index = $index->paginate($length);
-
-    	return ['data'=>$index, 'draw'=> $request->draw];
+        return $index;
     }
-
-    public function search($collection, $searchValue) {
-        if ($searchValue) {
-            return $collection->where(function($query) use($searchValue){
-                $query->orWhere('fiscalyear','LIKE','%'.$searchValue.'%');
-            });
-        }
-    }
-    public function getJevtype()
-    {
-        return $this->model->select(DB::raw('TRIM(FJEVTYP) as FJEVTYP'))->get();
-    }
-
     
 }

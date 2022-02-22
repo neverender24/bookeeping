@@ -251,10 +251,12 @@ export default {
 
         async _export(){
             let loader = this.$loading.show();
-            var payload = this.filterData;
-            _.assign(this.filterData, {length:""})
-            await axios.post('jevh/index', payload).then((response) => {
-                this.exportData = response.data.data.data.map(row => {
+
+            _.assign(this.tableData, this.filterData) 
+
+            await axios.post('jevh/export', this.tableData).then((response) => {
+                // console.log(response.data.data.data.length)
+                this.exportData = response.data.data.map(row => {
                     return {
                         'Fiscal Year': row.fiscalyear,
                         'Fund Detail Code': row.FUND_SCODE,

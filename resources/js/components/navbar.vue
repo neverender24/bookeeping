@@ -349,13 +349,13 @@
                                             >Account</router-link
                                         >
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <router-link
                                             class="dropdown-item"
                                              to="/user/settings"
                                             >Settings</router-link
                                         >
-                                    </li>
+                                    </li> -->
                                     <li><hr class="dropdown-divider" /></li>
                                     <li>
                                         <a

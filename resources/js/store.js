@@ -41,7 +41,6 @@ export const store = new Vuex.Store({
         },
         
         setJevhModalState(state, payload){
-
             state.jevModalTitle = payload.title
             state.jevModal = payload.isOpen
         },
