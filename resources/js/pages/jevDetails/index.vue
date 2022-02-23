@@ -18,62 +18,62 @@
                                 <div class = "row">
                                     <div class = "col-3">
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
                                             <label for="floatingInput">JEV TYPE</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"  v-model="fundDetailsName" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"  v-model="fundDetailsName" >
                                             <label for="floatingInput">FUND</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"   v-model="details.FJEVNO" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"   v-model="details.FJEVNO" >
                                             <label for="floatingInput">JEV Number</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FJEVDATE" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"    v-model="details.FJEVDATE" >
                                             <label for="floatingInput">JEV Date</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FCHKNO" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"    v-model="details.FCHKNO" >
                                             <label for="floatingInput">CHECK #</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FREFNO" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"    v-model="details.FREFNO" >
                                             <label for="floatingInput">REF #</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FPAYEE" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"     v-model="details.FPAYEE" >
                                             <label for="floatingInput">PAYEE</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <textarea class="form-control" style="height: 200px" readonly  v-model="details.FREMK"></textarea>
+                                            <textarea class="form-control fw-bold" style="height: 200px" readonly  v-model="details.FREMK"></textarea>
                                             <label for="floatingInput">DESCRIPTION</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FPREPBY" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"    v-model="details.FPREPBY" >
                                             <label for="floatingInput">PREPARED BY</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FPREPD" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"     v-model="details.FPREPD" >
                                             <label for="floatingInput">POSITION</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"     v-model="details.FAPPVBY" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"     v-model="details.FAPPVBY" >
                                             <label for="floatingInput">APPROVED BY</label>
                                         </div>
 
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control"  readonly id="floatingInput"    v-model="details.FAPPVD" >
+                                            <input type="text" class="form-control fw-bold"  readonly id="floatingInput"    v-model="details.FAPPVD" >
                                             <label for="floatingInput">POSITION</label>
                                         </div>
                                     </div>
@@ -81,9 +81,9 @@
                                         <datatable :columns="columns">
                                             <tbody>
                                                 <tr v-for="item in data" :key="item.id">
-                                                    <td>({{ item.FACTCODE }}) , {{ item.FTITLE }}</td>
-                                                    <td>({{ item.FSUBCDE }}) , {{ item.FSTITLE }}</td>
-                                                    <td>({{ item.FSUBCDE2 }}) , {{ item.FSTITLE2 }}</td>
+                                                    <td>{{ item.FTITLE }} , ({{ item.FACTCODE }})</td>
+                                                    <td>{{ item.FSTITLE }} , ({{ item.FSUBCDE }})</td>
+                                                    <td>{{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})</td>
                                                     <td>{{ item.FRESPCTR}}</td>
                                                     <td>{{ item.FVOUCHNO}}</td>
                                                     <td>{{ item.FALOBNO}}</td>
@@ -155,9 +155,9 @@ export default {
 
         let columns = [
             
-            { width: "10%", label: "ActCode/Title", name: "FACTCODE "},
-            { width: "10%", label: "SubCode/Title", name: "FSTITLE"},
-            { width: "10%", label: "SubCode2/Title", name: "FSTITLE2 "},
+            { width: "10%", label: "Title/ActCode", name: "FACTCODE "},
+            { width: "10%", label: "Title/SubCode", name: "FSTITLE"},
+            { width: "10%", label: "Title/SubCode2", name: "FSTITLE2 "},
             { width: "10%", label: "RespCtr", name: "FRESPCTR"},
             { width: "10%", label: "Voucher", name: "FVOUCHNO"},
             { width: "10%", label: "OBR #", name: "FALOBNO"},
