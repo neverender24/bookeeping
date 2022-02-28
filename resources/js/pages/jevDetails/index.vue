@@ -46,7 +46,7 @@
                                             <input type="text" class="form-control fw-bold"  readonly id="floatingInput"    v-model="details.FREFNO" >
                                             <label for="floatingInput">REF #</label>
                                         </div>
-                    
+
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control fw-bold"  readonly id="floatingInput"     v-model="details.FPAYEE" >
                                             <label for="floatingInput">PAYEE</label>
@@ -81,9 +81,21 @@
                                         <datatable :columns="columns">
                                             <tbody>
                                                 <tr v-for="item in data" :key="item.id">
-                                                    <td>{{ item.FTITLE }} , ({{ item.FACTCODE}})</td>
-                                                    <td>{{ item.FSTITLE }} , ({{ item.FSUBCDE}})</td>
-                                                    <td>{{ item.FSTITLE2 }} , ({{ item.FSUBCDE2}})</td>
+                                                    <td>
+                                                        <span v-if="item.FTITLE && item.FACTCODE">
+                                                            {{ item.FTITLE }} , ({{ item.FACTCODE }})
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span v-if="item.FSTITLE && item.FSUBCDE">
+                                                            {{ item.FSTITLE }} , ({{ item.FSUBCDE }})
+                                                        </span>
+                                                    </td>
+                                                    <td >
+                                                        <span v-if="item.FSUBCDE && item.FSTITLE2">
+                                                            {{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})
+                                                        </span> 
+                                                    </td>
                                                     <td>{{ item.FRESPCTR}}</td>
                                                     <td>{{ item.FVOUCHNO}}</td>
                                                     <td>{{ item.FALOBNO}}</td>
@@ -242,12 +254,12 @@ export default {
             let loader = this.$loading.show();
             await axios.post(url, this.details).then((response) => {
                 let data = response.data;
-
+                
                 // if (this.tableData.draw == data.draw) {
                     this.data = data;
                     // this.configPagination(response);
                 // }
-
+    
                  loader.hide()
             });
             this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
