@@ -184,7 +184,7 @@ export default {
                 length: 5,
                 search: "",
             },
-
+            
             fundDetailsName:"",
             data: [],
             filtering: false,
@@ -251,6 +251,7 @@ export default {
                  loader.hide()
             });
             this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
+        
         },
 
         async getFundDetails(url = "fundDetails/getFundDetails") {
