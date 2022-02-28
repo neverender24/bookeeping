@@ -36,13 +36,17 @@
                 
 			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
                 <download-excel 
-                    class="btn btn-warning d-none"
-                    :data="exportData" 
+                    class="btn btn-warning"
+                    :fetch = "_export" 
                     id="exportId"
                     type="xlsx"
+                    :before-generate = "startDownload"
+                    :before-finish   = "finishDownload"
+                    :fields="fieldNames"
                 >
+                Download Data
                 </download-excel>
-                <button class="btn btn-sm btn-warning" @click="_export()"> Download Data </button>
+                
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
 			        <div class="card-body">
                         <datatable
@@ -177,8 +181,17 @@ export default {
              showDetails: "",
              jev_details: {},
              exportData:[],
-             fieldNames:{},
-                tempFilter: {}
+            tempFilter: {},
+            loaderExport:null,
+            fieldNames: {
+                "Fiscal Year": "fiscalyear",
+                "Fund Detail Code": "FUND_SCODE",
+                "Jev Number": "FJEVNO",
+                "Date": "FJEVDATE",
+                "Check No.": "FCHKNO",
+                "Payee": "FPAYEE"    	
+                
+            }
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -207,6 +220,7 @@ export default {
     mounted() {
         this.tempFilter = this.filterData
         this.getData();
+        
     },
 
 
@@ -250,39 +264,36 @@ export default {
         },
 
         async _export(){
-            let loader = this.$loading.show();
+            
 
             _.assign(this.tableData, this.filterData) 
-
+            let data = {};
             await axios.post('jevh/export', this.tableData).then((response) => {
                 // console.log(response.data.data.data.length)
-                this.exportData = response.data.data.map(row => {
+                data = response.data.data.map(row => {
                     return {
-                        'Fiscal Year': row.fiscalyear,
-                        'Fund Detail Code': row.FUND_SCODE,
-                        'Jev Number': row.FJEVNO,
-                        'Date': row.FJEVDATE,
-                        'Check No.': row.FCHKNO,
-                        'Payee': row.FPAYEE
+                        fiscalyear: row.fiscalyear,
+                        FUND_SCODE: row.FUND_SCODE,
+                        FJEVNO: row.FJEVNO,
+                        FJEVDATE: row.FJEVDATE,
+                        FCHKNO:row.FCHKNO,
+                        FPAYEE: row.FPAYEE
                     }
 
                 })
-
-                loader.hide()
-            });
-            this.fieldNames = {
-                "Fiscal Year": "exportData.fiscalyear",
-                "Fund Detail Code": "exportData.FUND_SCODE",
-                "Jev Number": "exportData.FJEVNO",
-                "Date": "exportData.FJEVDATE",
-                "Check No.": "exportData.FCHKNO",
-                "Payee": "exportData.FPAYEE"    	
                 
-            }
-            var downloadData = document.getElementById('exportId');
-            downloadData.click();
+                
+            });
+            return data
         },
 
+        startDownload(){
+            this.loaderExport = this.$loading.show();
+        },
+
+        finishDownload(){
+            this.loaderExport.hide();
+        },
         // end of datatable pagination functions
        
         advance_filtering() {

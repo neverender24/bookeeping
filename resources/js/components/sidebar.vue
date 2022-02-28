@@ -165,7 +165,7 @@
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a
                                     class="nav-link"
-                                    href="https://themes.3rdwavemedia.com/bootstrap-templates/admin-dashboard/portal-free-bootstrap-admin-dashboard-template-for-developers/"
+                                    href="#"
                                 >
                                     <span class="nav-icon">
                                         <svg
