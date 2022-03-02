@@ -59,7 +59,7 @@ export default {
                 email: ""
             }
         }
-    },
+    },  
 
     mounted() {
         this.myModal = new Modal(document.getElementById('add_user_modal'))

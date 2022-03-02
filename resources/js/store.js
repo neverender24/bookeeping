@@ -6,6 +6,10 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
+        report:{
+            reportsModal:false,
+            reportsModalTitle:"",
+        },
         searchBox: "",
         user: [],
         filterData: {},
@@ -31,6 +35,11 @@ export const store = new Vuex.Store({
         },
     },
     mutations: {
+        reportsModalSate(state, payload){
+            state.report.reportsModalTitle = payload.title
+            state.report.reportsModal = payload.isTrue
+        },
+
         setFilterData(state, payload) {
             state.filterData = payload
         },
@@ -54,6 +63,9 @@ export const store = new Vuex.Store({
             state.editData = payload
             state.primaryModal = true
         },
+        refreshTheTable(state) {
+            state.refreshTable = !state.refreshTable
+        },
         /*
         ** PPMP
         */
@@ -68,9 +80,6 @@ export const store = new Vuex.Store({
             state.ppmpItems.editModal = false
             state.ppmpItems.editDataPpmpItem = []
             state.ppmpItems.id_ppmp = null
-        },
-        refreshTheTable(state) {
-            state.refreshTable = !state.refreshTable
         },
         setPpmpId(state, payload) {
             state.ppmpItems.id_ppmp = payload
