@@ -119,6 +119,8 @@
                         </div>
 				    </div>
 			        <modal v-if="primaryModal"></modal>
+                    <print-reports-modal v-if="printReport.isTrue"></print-reports-modal>
+
 
 		    </div>
                    
@@ -149,10 +151,12 @@
 import { Modal } from 'bootstrap'
 import Datatable from "../../helpers/datatable";
 import { mapState, mapGetters } from "vuex";
+import printModal from "./printmodal.vue"
 
 export default {
     components: {
         datatable: Datatable,
+        printReportsModal: printModal,
       
         
     },
@@ -216,7 +220,6 @@ export default {
                 5:"ADA",
                 6:"Procurement"
             },
-            print_details: [],
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -225,7 +228,8 @@ export default {
     computed: {
         ...mapState({
             primaryModal: state => state.primaryModal,
-            refreshTable: state => state.refreshTable
+            refreshTable: state => state.refreshTable,
+            printReport: state => state.printReportSecond
         }),
 
         ...mapGetters([
@@ -288,7 +292,7 @@ export default {
         },
 
         print_report(){
-            this.print_details = this.data
+            this.$store.commit('printReportSecondModalState', {title:"Print Report", isTrue:true, filterData:[this.details.FJEVNO,this.details.FUND_SCODE ]})
         },
 
     },

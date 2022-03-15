@@ -64,7 +64,7 @@ import { Modal } from 'bootstrap'
 import { mapState } from "vuex";
 
 export default {
-    data() {
+    data() {    
         return {
             myReportsModal: null,
             funds: {},
