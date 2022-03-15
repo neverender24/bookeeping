@@ -42,4 +42,4 @@ Route::prefix('fundDetails')->group(function (){
 });
 
 Route::post('get-fund-details', 'FundDetailsController@getFundDetails');
-Route::get('export-jevd/{fjevno}&{fund_scode}&{fiscalyear}', 'JevdController@exporJevd');
+Route::get('export-jevd', 'JevdController@exportJevd');

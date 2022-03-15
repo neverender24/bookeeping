@@ -5,9 +5,6 @@ import VueRouter from 'vue-router'
 import UserAccountComponent from "./pages/account/myAccount.vue"
 import UserSettingsComponent from "./pages/account/settings.vue"
 import UsersComponent from "./pages/user/index.vue"
-
-import PpmpComponent from "./pages/ppmp/index.vue"
-import EmployeeComponent from "./pages/employee/index.vue"
 import JevhComponent from "./pages/jevh/index.vue"
 
 Vue.use(VueRouter)
@@ -32,16 +29,6 @@ const routes = [
         path: '/users',
         name: 'users',
         component: UsersComponent,
-    },
-    {
-        path: '/ppmp',
-        name: 'ppmp',
-        component: PpmpComponent,
-    },
-    {
-        path: '/employees',
-        name: 'employee',
-        component: EmployeeComponent,
     },
     {
         path: '/jevh',

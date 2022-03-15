@@ -15,4 +15,7 @@ class Jevd extends Model
     {
         return $this->hasMany(FundDetails::class, 'FUND_SCODE', 'FUND_SCODE');
     }
+    public function jevh(){
+        return $this->hasMany(Jevd::class, 'FUND_SCODE','FUND_SCODE');
+    }
 }

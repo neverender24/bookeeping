@@ -58,33 +58,17 @@ export const store = new Vuex.Store({
             state.primaryModal = false
             state.editData = []
         },
+        
         editing(state, payload) {
             state.primaryModalTitle = 'Edit Employee'
             state.editData = payload
             state.primaryModal = true
         },
+
         refreshTheTable(state) {
             state.refreshTable = !state.refreshTable
         },
-        /*
-        ** PPMP
-        */
-        createPpmpItems(state, payload) {
-            state.ppmpItems.editModal = true
-        },
-        editingPpmpItems(state, payload) {
-            state.ppmpItems.editDataPpmpItem = payload
-            state.ppmpItems.editModal = true
-        },
-        clearPpmpItemEditData(state) {
-            state.ppmpItems.editModal = false
-            state.ppmpItems.editDataPpmpItem = []
-            state.ppmpItems.id_ppmp = null
-        },
-        setPpmpId(state, payload) {
-            state.ppmpItems.id_ppmp = payload
-        },
-        //end
+
     },
     actions: {
 
