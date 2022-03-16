@@ -119,9 +119,6 @@
                         </div>
 				    </div>
 			        <modal v-if="primaryModal"></modal>
-                    <print-reports-modal v-if="printReport.isTrue"></print-reports-modal>
-
-
 		    </div>
                    
                 <div class="modal-footer">
@@ -151,14 +148,11 @@
 import { Modal } from 'bootstrap'
 import Datatable from "../../helpers/datatable";
 import { mapState, mapGetters } from "vuex";
-import printModal from "./printmodal.vue"
 
 export default {
     components: {
         datatable: Datatable,
-        printReportsModal: printModal,
-      
-        
+
     },
     
      props: {
@@ -229,7 +223,6 @@ export default {
         ...mapState({
             primaryModal: state => state.primaryModal,
             refreshTable: state => state.refreshTable,
-            printReport: state => state.printReportSecond
         }),
 
         ...mapGetters([
@@ -292,7 +285,7 @@ export default {
         },
 
         print_report(){
-            this.$store.commit('printReportSecondModalState', {title:"Print Report", isTrue:true, filterData:[this.details.FJEVNO,this.details.FUND_SCODE ]})
+             window.open('http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fjevdreport&reportUnit=%2Freports%2Fjevdreport%2Fjevdreports&standAlone=true&decorate=no&FJEVNO='+this.details.FJEVNO+'&FUND_SCODE='+this.details.FUND_SCODE+'&fiscalyear='+this.details.fiscalyear);
         },
 
     },

@@ -10,12 +10,6 @@ export const store = new Vuex.Store({
             reportsModal:false,
             reportsModalTitle:"",
         },
-        
-        printReportSecond:{
-            title:"",
-            isTrue:false,
-            filterData:[]
-        },
 
         searchBox: "",
         user: [],
@@ -45,13 +39,6 @@ export const store = new Vuex.Store({
         reportsModalSate(state, payload){
             state.report.reportsModalTitle = payload.title
             state.report.reportsModal = payload.isTrue
-        },
-
-     
-        printReportSecondModalState(state, payload) {
-            state.printReportSecond.title = payload.title 
-            state.printReportSecond.isTrue = payload.isTrue 
-            state.printReportSecond.filterData = payload.filterData 
         },
 
         setFilterData(state, payload) {
