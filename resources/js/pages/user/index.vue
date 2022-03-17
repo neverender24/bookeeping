@@ -254,7 +254,7 @@ export default {
         async edit_user(id) {
             await axios.post('edit_user', { id: id }).then( response => {
                 this.$store.commit('editing', response.data)
-            })
+            })    
         },
 
         delete_user(id) {

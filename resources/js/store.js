@@ -24,6 +24,14 @@ export const store = new Vuex.Store({
             editModal: false,
             id_ppmp: null,
         },
+
+        // charlie state
+        editDetailsModal:{
+            editJevdModal: false,
+            editJevdModalTitle: ""
+        }
+        
+   
     },
     getters: {
          isAdmin: async state => {
@@ -66,6 +74,19 @@ export const store = new Vuex.Store({
         refreshTheTable(state) {
             state.refreshTable = !state.refreshTable
         },
+
+        // cha mutations
+        setDetailsModalState(state, payload) {
+            state.editDetailsModal.editJevdModalTitle = payload.title
+            state.editDetailsModal.editJevdModal = payload.isTrue;
+        },
+
+        edit(state, payload) {
+            state.editDetailsModal.editJevdModal = true;
+            state.editDetailsModal.editJevdModalTitle = payload.title
+            state.editData = payload.data
+        },
+
         /*
         ** PPMP
         */

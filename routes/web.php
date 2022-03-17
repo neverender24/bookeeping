@@ -34,7 +34,6 @@ Route::prefix('jevh')->group(function (){
 Route::prefix('jevd')->group(function (){
     Route::post('index', 'JevdController@index');
     Route::post('jevDetails', 'JevdController@jevDetails');
-
 });
 
 Route::prefix('fundDetails')->group(function (){
@@ -43,3 +42,12 @@ Route::prefix('fundDetails')->group(function (){
 
 Route::post('get-fund-details', 'FundDetailsController@getFundDetails');
 Route::get('export-jevd/{fjevno}&{fund_scode}&{fiscalyear}', 'JevdController@exporJevd');
+
+// crud of jevd
+Route::post('get_all_details', 'JevdController@getAllDetails');
+Route::post('getjDetails', 'JevdController@getJDetails');
+Route::post('getDetailsSubcode', 'JevdController@getDetailsSubcode');
+Route::post('store_jdetails', 'JevdController@store_jdetails');
+Route::post('edit_jdetails', 'JevdController@edit_jdetails');
+Route::post('update_jdetails', 'JevdController@update_jdetails');
+Route::post('delete_details', 'JevdController@delete_details')->name('delete_details');

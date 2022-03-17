@@ -9,6 +9,7 @@ class Jevd extends Model
 {
     use HasFactory;
     protected $table = "jevd";
+    protected $primaryKey = 'recid';
     protected $guarded = [];
 
     public function fundDetails()
