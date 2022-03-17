@@ -40,6 +40,7 @@ class JevhController extends Controller
                 $query->orWhere('FUND_SCODE','LIKE','%'.$searchValue.'%');
                 $query->orWhere('FCHKNO','LIKE','%'.$searchValue.'%');
                 $query->orWhere('FPAYEE','LIKE','%'.$searchValue.'%');
+                $query->orWhere('FREMK','LIKE','%'.$searchValue.'%');
             });
         }
     }
