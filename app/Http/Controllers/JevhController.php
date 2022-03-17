@@ -36,6 +36,10 @@ class JevhController extends Controller
         if ($searchValue) {
             return $collection->where(function($query) use($searchValue){
                 $query->orWhere('fiscalyear','LIKE','%'.$searchValue.'%');
+                $query->orWhere('FJEVNO','LIKE','%'.$searchValue.'%');
+                $query->orWhere('FUND_SCODE','LIKE','%'.$searchValue.'%');
+                $query->orWhere('FCHKNO','LIKE','%'.$searchValue.'%');
+                $query->orWhere('FPAYEE','LIKE','%'.$searchValue.'%');
             });
         }
     }
