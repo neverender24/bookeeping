@@ -57,7 +57,7 @@ class JevdController extends Controller
                             ->on('subaccounts2.FSUBCDE', '=', 'jevd.FSUBCDE')
                             ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
                     })
-                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE', 'funds_details.FUNDDETAIL_NAME')
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE')
                     ->where('jevd.FJEVNO','=',$request->FJEVNO)
                     ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
                     ->where('jevd.fiscalyear','=',$request->fiscalyear)
@@ -74,7 +74,7 @@ class JevdController extends Controller
             });
         }
     }
-    public function exporJevd(Request $request){
+    public function exportJevd(Request $request){
         $details = DB::table('jevd')
                     ->select(
                         'jevd.*',
@@ -83,6 +83,13 @@ class JevdController extends Controller
                         'subaccounts1.FSTITLE',
                         'subaccounts2.FSTITLE2',
                         'funds_details.FUNDDETAIL_NAME',
+                        'jevh.FJEVTYP',
+                        'jevh.FPREPBY',
+                        'jevh.FPREPD',
+                        'jevh.FAPPVBY',
+                        'jevh.FAPPVD',
+                        'jevh.FJEVDATE',
+                        'jevh.FCHKNO',
                         DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit')
                     
                     )
@@ -105,9 +112,9 @@ class JevdController extends Controller
                             ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
                     })
                     ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE')
-                    ->where('jevd.FJEVNO','=','01-00001')
-                    ->where('jevd.FUND_SCODE','=','301')
-                    ->where('jevd.fiscalyear','=','2021')
+                    ->where('jevd.FJEVNO','=',$request->FJEVNO)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->where('jevd.fiscalyear','=',$request->fiscalyear)
                     ->get();
         
             return $details;

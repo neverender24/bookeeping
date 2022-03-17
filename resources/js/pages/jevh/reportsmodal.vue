@@ -9,6 +9,7 @@
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"
+                        @click="close_modal()"
                     ></button>
                 </div>
                 <div class="modal-body">
@@ -16,24 +17,24 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <label for="">From</label>
-                                <input type="date" class="form-control mt-1 pt-1 mb-1" >
+                                <input type="date" class="form-control mt-1 pt-1 mb-1" v-model="filterData.from" @click="runFilter()">
                             </div>
                             <div class="col-md">
                                 <label for="">To</label>
-                                <input type="date" class="form-control mt-1 pt-1 mb-1" >
+                                <input type="date" class="form-control mt-1 pt-1 mb-1" v-model="filterData.to" @click="runFilter()">
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col-md">
                                 <label for="colFormLabelSm" class="col-sm-2 col-form-label">Fund</label>
-                                <select class="form-select mt-1 pt-1 mb-1" v-model="filterData.FUND_SCODE" @change="runFilter()">
+                                <select class="form-select mt-1 pt-1 mb-1" v-model="filterData.FUND_SCODE" @click="runFilter()">
                                     <option v-for="item in funds" :value="item.FUND_SCODE" :key="item.recid"> {{ item.FUNDDETAIL_NAME}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label">Jev Type</label>
-                            <select class="form-select mt-1 pt-1 mb-1" v-model="filterData.FJEVTYP" @change="runFilter()">
+                            <select class="form-select mt-1 pt-1 mb-1" v-model="filterData.FJEVTYP" @click="runFilter()">
                                 <option v-for="(item,index) in jevtype" :value="item.value" :key="index"> {{ item.name}}</option>
                             </select>
                         </div>
@@ -63,7 +64,7 @@ import { Modal } from 'bootstrap'
 import { mapState } from "vuex";
 
 export default {
-    data() {
+    data() {    
         return {
             myReportsModal: null,
             funds: {},
@@ -103,6 +104,7 @@ export default {
 
         async runFilter() {
             await this.$store.commit('setFilterData', this.filterData)
+            await this.$store.commit('refreshTheTable')
         }
     }
 }
