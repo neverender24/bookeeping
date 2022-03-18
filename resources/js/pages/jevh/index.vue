@@ -285,9 +285,8 @@ export default {
             this.jev_details = item
     
         },
-        print_report(item){
-            this.jevd_data = item
-                window.open('http://192.168.6.23:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fjevdreport&reportUnit=%2Freports%2Fjevdreport%2Fjevdreports&standAlone=true&decorate=no&FJEVNO='+this.jevd_data.FJEVNO+'&FUND_SCODE='+this.jevd_data.FUND_SCODE+'&fiscalyear='+this.jevd_data.fiscalyear);
+        print_report(data){
+            window.open('http://122.54.19.171:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fjevdreport&reportUnit=%2Freports%2Fjevdreport%2Fjevdreports&standAlone=true&decorate=no&FJEVNO='+data.FJEVNO+'&FUND_SCODE='+data.FUND_SCODE+'&fiscalyear='+data.fiscalyear);
         },
 
         async _export(){
