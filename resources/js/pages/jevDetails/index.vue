@@ -141,16 +141,16 @@
                                                 </tr>
                                             </tbody>
                                         </datatable>
-                                        <div class="d-flex flex-row-reverse bd-highlight">
+                                        <div class="row justify-content-end">
                                             <div class="col-2">
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control fw-bold" style="width: 150px; height:55px;" id="floatingInputGrid" readonly v-model="sum.totalDebit">
+                                                    <input type="text" class="form-control fw-bold" style="width: 150px; height:55px;" readonly v-model="sum.totalDebit">
                                                     <label for="floatingInputGrid">Total Debit</label>
                                                 </div>
                                             </div>
                                             <div class="col-2">
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control fw-bold" style="width: 150px; height:55px;" id="floatingInputGrid" readonly v-model="sum.totalCredit">
+                                                    <input type="text" class="form-control fw-bold" style="width: 150px; height:55px;" readonly v-model="sum.totalCredit">
                                                     <label for="floatingInputGrid">Total Credit</label>
                                                 </div>
                                             </div>
