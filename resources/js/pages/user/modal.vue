@@ -59,7 +59,7 @@ export default {
                 email: ""
             }
         }
-    },  
+    },
 
     mounted() {
         this.myModal = new Modal(document.getElementById('add_user_modal'))
@@ -89,7 +89,7 @@ export default {
         save_user() {
 
             if ( this.is_edit() ) {
-                axios.patch('update_users', this.formData).then( response => {
+                axios.post('update_users', this.formData).then( response => {
                     this.$snotify.success("Record added", "Success!");
                     this.close_modal()
                 })
@@ -98,11 +98,11 @@ export default {
                     this.$snotify.success("Record added", "Success!");
                     this.close_modal()
                 })
-            } 
+            }
         },
 
         is_edit() {
-            return this.editData.length != 0
+            return this.editData.length != 0    
         }
     }
 }

@@ -13,6 +13,7 @@ export const store = new Vuex.Store({
 
         searchBox: "",
         user: [],
+        totalSum: "",
         filterData: {},
         primaryModal: false,
         primaryModalTitle: "",
@@ -25,6 +26,14 @@ export const store = new Vuex.Store({
             editModal: false,
             id_ppmp: null,
         },
+
+        // charlie state
+        editDetailsModal:{
+            editJevdModal: false,
+            editJevdModalTitle: ""
+        }
+        
+   
     },
     getters: {
          isAdmin: async state => {
@@ -66,9 +75,26 @@ export const store = new Vuex.Store({
             state.primaryModal = true
         },
 
+        total(state, payload){
+            state.totalSum = payload
+        },
+
         refreshTheTable(state) {
             state.refreshTable = !state.refreshTable
         },
+
+        // cha mutations
+        setDetailsModalState(state, payload) {
+            state.editDetailsModal.editJevdModalTitle = payload.title
+            state.editDetailsModal.editJevdModal = payload.isTrue;
+        },
+
+        edit(state, payload) {
+            state.editDetailsModal.editJevdModal = true;
+            state.editDetailsModal.editJevdModalTitle = payload.title
+            state.editData = payload.data
+        },
+
 
     },
     actions: {

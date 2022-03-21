@@ -20,7 +20,7 @@
                                             >
 					                    </div>
 					                    <div class="col-auto">
-					                        <button class="btn app-btn-secondary" v-bind:class="{'text-primary': filtering}" @click="advance_filtering()">
+					                        <button class="btn app-btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Advance Filter" v-bind:class="{'text-primary': filtering}" @click="advance_filtering()">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
                                                 <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
                                                 </svg>
@@ -43,7 +43,7 @@
 			    </div><!--//row-->
                 
 			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
-                <download-excel 
+                <download-excel data-bs-toggle="tooltip" data-bs-placement="top" title="Download Data to Excel"
                     class="btn btn-warning"
                     :fetch = "_export" 
                     id="exportId"
@@ -72,13 +72,13 @@
                                     <td>{{ item.FREMK }}</td>
                                     <td>
                                         <div class="btn btn-group">
-                                            <a class="dropdown-item p-1" @click="show_details(item)">
+                                            <a class="dropdown-item p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Show Details" @click="show_details(item)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                                     <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
                                                     <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
                                                 </svg>
                                             </a>
-                                            <a class="dropdown-item p-1" @click="print_report(item)">
+                                            <a class="dropdown-item p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Print" @click="print_report(item)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
                                                     <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
                                                     <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
@@ -283,6 +283,9 @@ export default {
             
             this.$store.commit('setJevhModalState', {title:"Jevh Details", isOpen:true})
             this.jev_details = item
+            axios.post('jevd/jevdTotal',  { FJEVNO: this.jev_details.FJEVNO , FUND_SCODE: this.jev_details.FUND_SCODE, fiscalyear: this.jev_details.fiscalyear }).then(response => {
+                this.$store.commit('total', response.data)
+            })
     
         },
         print_report(data){
