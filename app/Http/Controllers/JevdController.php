@@ -70,7 +70,7 @@ class JevdController extends Controller
     public function jevdTotal(Request $request)
     {
         $totalSum = DB::table('jevd')
-                    ->select(DB::raw('SUM(jevd.FCREDIT) as totalCredit, SUM(jevd.FDEBIT) as totalDebit')
+                    ->select(DB::raw('FORMAT(SUM(jevd.FCREDIT),2) as totalCredit,FORMAT(SUM(jevd.FDEBIT),2) as totalDebit')
                     
                     )
                     ->leftJoin('chartofaccounts', function ($query) {
