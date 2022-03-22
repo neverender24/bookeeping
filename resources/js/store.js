@@ -30,9 +30,14 @@ export const store = new Vuex.Store({
         editDetailsModal:{
             editJevdModal: false,
             editJevdModalTitle: ""
+        },
+
+        jevhDetailsModal:{
+            jevhModal: false,
+            editJevhModalTitle: ""
         }
-        
-   
+
+
     },
     getters: {
          isAdmin: async state => {
@@ -88,6 +93,11 @@ export const store = new Vuex.Store({
             state.editDetailsModal.editJevdModal = true;
             state.editDetailsModal.editJevdModalTitle = payload.title
             state.editData = payload.data
+        },
+
+        setJevhDetailsModalState(state, payload){
+            state.jevhDetailsModal.editJevhModalTitle = payload.title;
+            state.jevhDetailsModal.jevhModal = payload.isTrue
         },
 
 

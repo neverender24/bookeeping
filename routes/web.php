@@ -51,3 +51,11 @@ Route::post('edit_jdetails', 'JevdController@edit_jdetails');
 Route::post('update_jdetails', 'JevdController@update_jdetails');
 Route::post('delete_details', 'JevdController@delete_details')->name('delete_details');
 Route::get('export-jevd', 'JevdController@exportJevd');
+
+// CRUD FOR JEVH
+Route::post('get_jev_details', 'JevhController@get_jev_details');
+Route::post('getjevDetails', 'JevhController@getjevDetails');
+Route::post('getjevDetailssbcde', 'JevhController@getjevDetailssbcde');
+Route::post('get_jevtyp_details', 'JevhController@get_jevtyp_details');
+Route::post('getJevtypdetails', 'JevhController@getJevtypdetails');
+Route::post('payee_details', 'JevhController@payee_details');

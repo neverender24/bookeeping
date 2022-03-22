@@ -42,6 +42,14 @@
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
                 
+                <div class="col-auto" align="right">
+                            <button class="btn app-btn-secondary" @click="create()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                                </svg>
+                                New Record
+                            </button>
+                </div>
 			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
                 <download-excel 
                     class="btn btn-warning"
@@ -55,6 +63,7 @@
                 Download Data
                 </download-excel>
                 
+
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
 			        <div class="card-body">
                         <datatable
@@ -127,6 +136,9 @@
                 v-if="jevModal" 
                 :details="jev_details"
             ></modal-details>
+
+            <jevh-modal v-if="jevhDetailsModal.jevhModal"></jevh-modal>
+
 		    </div>
 </template>
 
@@ -137,6 +149,7 @@ import { mapState, mapGetters } from "vuex";
 import ModalDetails from "../jevDetails/index";
 import AdvancedFilter from "./advanceFilter.vue";
 import Modal from "./reportsmodal.vue"
+import JevhdetailsModal from './jevhdetailsModal.vue';
 
 export default {
     components: {
@@ -145,6 +158,8 @@ export default {
         modalDetails: ModalDetails,
         advancedFilter: AdvancedFilter,
         reportsModal: Modal,
+        jevhModal: JevhdetailsModal,
+
         
     },
 
@@ -212,7 +227,15 @@ export default {
                 "Check No.": "FCHKNO",
                 "Payee": "FPAYEE"    	
                 
-            }
+            },
+            jevtype:{
+                1:"Collection",
+                2:"Check Disbursement",
+                3:"Cash Disbursement",
+                4:"General",
+                5:"ADA",
+                6:"Procurement"
+            },
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -224,7 +247,7 @@ export default {
             filterData: state => state.filterData,
             jevModal: state => state.jevModal,
             report: state => state.report,
-
+            jevhDetailsModal: state => state.jevhDetailsModal
         }),
 
         ...mapGetters([
@@ -331,6 +354,11 @@ export default {
         //     this.$store.commit('reportsModalSate', {title:"Filter Report", isTrue:true})
             
         // },
+
+        // Start of the CRUD
+        create() {
+            this.$store.commit('setJevhDetailsModalState', { title: "Add Journal Entry Voucher", isTrue:true})
+        }
         
     },
 };
