@@ -288,7 +288,7 @@ export default {
     
         },
         print_report(data){
-            window.open('http://122.54.19.171:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fjevdreport&reportUnit=%2Freports%2Fjevdreport%2Fjevdreports&standAlone=true&decorate=no&FJEVNO='+data.FJEVNO+'&FUND_SCODE='+data.FUND_SCODE+'&fiscalyear='+data.fiscalyear);
+            window.open('http://122.54.19.171:8080/jasperserver/flow.html?pp=u%3DJamshasadid%7Cr%3DManager%7Co%3DEMEA,Sales%7Cpa1%3DSweden&_flowId=viewReportFlow&_flowId=viewReportFlow&ParentFolderUri=%2Freports%2Fjevdreport&reportUnit=%2Freports%2Fjevdreport%2Fjevdprintreport&standAlone=true&decorate=no&FJEVNO='+data.FJEVNO+'&FUND_SCODE='+data.FUND_SCODE+'&fiscalyear='+data.fiscalyear);
         },
 
         async _export(){
