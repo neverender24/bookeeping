@@ -17,24 +17,24 @@
                         <div class="row g-2">
                             <div class="col-md">
                                 <label for="">From</label>
-                                <input type="date" class="form-control mt-1 pt-1 mb-1" v-model="filterData.from" @click="runFilter()">
+                                <input type="date" class="form-control mt-1 pt-1 mb-1" v-model="filterData1.from" @click="runFilter()">
                             </div>
                             <div class="col-md">
                                 <label for="">To</label>
-                                <input type="date" class="form-control mt-1 pt-1 mb-1" v-model="filterData.to" @click="runFilter()">
+                                <input type="date" class="form-control mt-1 pt-1 mb-1" v-model="filterData1.to" @click="runFilter()">
                             </div>
                         </div>
                         <div class="row g-2">
                             <div class="col-md">
                                 <label for="colFormLabelSm" class="col-sm-2 col-form-label">Fund</label>
-                                <select class="form-select mt-1 pt-1 mb-1" v-model="filterData.FUND_SCODE" @click="runFilter()">
+                                <select class="form-select mt-1 pt-1 mb-1" v-model="filterData1.FUND_SCODE" @click="runFilter()">
                                     <option v-for="item in funds" :value="item.FUND_SCODE" :key="item.recid"> {{ item.FUNDDETAIL_NAME}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md">
                             <label for="colFormLabelSm" class="col-sm-2 col-form-label">Jev Type</label>
-                            <select class="form-select mt-1 pt-1 mb-1" v-model="filterData.FJEVTYP" @click="runFilter()">
+                            <select class="form-select mt-1 pt-1 mb-1" v-model="filterData1.FJEVTYP" @click="runFilter()">
                                 <option v-for="(item,index) in jevtype" :value="item.value" :key="index"> {{ item.name}}</option>
                             </select>
                         </div>
@@ -76,14 +76,23 @@ export default {
                 {value:5, name:"ADA"},
                 {value:6, name:"Procurement"},
             ],
-            filterData: {}
+            filterData1: {},
+            data1:[],
         }
-    }, 
+    },
+    
+    watch: {
+         refreshTable() {
+            this.getData()
+        },
+    },
+
     mounted() {
         this.myReportsModal = new Modal(document.getElementById('reports_modal'))
         this.myReportsModal.show()
 
         this.getAllFunds()
+        this.getData()
     },
     computed: {
         ...mapState({
@@ -103,9 +112,18 @@ export default {
         },
 
         async runFilter() {
-            await this.$store.commit('setFilterData', this.filterData)
-            await this.$store.commit('refreshTheTable')
-        }
-    }
+            await this.$store.commit('setFilterData', this.filterData1)
+        },
+        
+        async getData(url = "jevh/index") {
+              this.showDetails = "";
+            _.assign(this.tableData, this.filterData1) 
+
+            await axios.post(url, this.tableData).then((response) => {
+                let data1 = response.data;
+
+            });
+        },
+    },
 }
 </script>

@@ -148,6 +148,94 @@ class JevdController extends Controller
         
             return $details;
     }
+//-------------------------------------------------------------------
+
+    public function jevdPrintReport(Request $request){
+        $details = DB::table('jevd')
+                    ->select(
+                        'jevd.*',
+                        'chartofaccounts.FTITLE',
+                        'subaccounts1.FTITLE',
+                        'subaccounts1.FSTITLE',
+                        'subaccounts2.FSTITLE2',
+                        'funds_details.FUNDDETAIL_NAME',
+                        'jevh.FJEVTYP',
+                        'jevh.FPREPBY',
+                        'jevh.FPREPD',
+                        'jevh.FAPPVBY',
+                        'jevh.FAPPVD',
+                        'jevh.FJEVDATE',
+                        'jevh.FCHKNO',
+                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
+                        
+                    )
+                    ->leftjoin('jevh', function ($query){
+                        $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
+                            ->on('jevd.FJEVNO', '=', 'jevh.FJEVNO');
+                    })
+                    ->leftJoin('chartofaccounts', function ($query) {
+                        $query->on('chartofaccounts.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('jevd.fiscalyear', '>=', 'chartofaccounts.fiscalyear')
+                            ->on('jevd.fiscalyear', '<=', 'chartofaccounts.fiscalyear_to');
+                    })
+                    ->leftJoin('subaccounts1', function ($query) {
+                        $query->on('subaccounts1.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('subaccounts1.FSUBCDE', '=', 'jevd.FSUBCDE');
+                    })
+                    ->leftJoin('subaccounts2', function ($query) {
+                        $query->on('subaccounts2.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('subaccounts2.FSUBCDE', '=', 'jevd.FSUBCDE')
+                            ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
+                    })
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE')
+                    ->where('jevd.FJEVNO','=',$request->FJEVNO)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->where('jevd.fiscalyear','=',$request->fiscalyear)
+                    ->get();
+        
+            return $details;
+    }
+
+
+//---------------------------------------------------------
+
+
+    public function exportJevtypeReport(Request $request)
+    {
+        $details = DB::table('jevd')
+                    ->select(
+                        'jevd.*',
+                        'jevh.FJEVTYP',
+                        'jevh.FPAYEE',
+                        'jevh.FJEVDATE',
+                        'funds_details.FUNDDETAIL_NAME',
+                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
+                        // DB::raw('Case when jevd.FDEBIT = 10101010 then jevd.FDEBIT
+                        //     when jevd.FCREDIT = 40102080 then jevd.FCREDIT
+                        //     when jevd.FCREDIT = 40102040 then jevd.FCREDIT
+                        //     when jevd.FCREDIT = 40202050 then jevd.FCREDIT
+                        //     when jevd.FCREDIT = 40201040 then jevd.FCREDIT
+                        //     when jevd.FCREDIT = 40202200 then jevd.FCREDIT 
+                        //     when jevd.FDEBIT = 10102010 then jevd.FDEBIT
+                        //     when jevd.FDEBIT = 10201010 then jevd.FDEBIT
+                        //     when jevd.FCREDIT = 10101010 then jevd.FCREDIT else null'
+                        // )
+                        
+                    )
+                    ->leftJoin('jevh', function($query){
+                        $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
+                        ->on('jevh.FJEVNO', '=', 'jevd.FJEVNO')
+                        ->on('jevh.fiscalyear', '=', 'jevd.fiscalyear');                     
+                    })
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE', 'jevh.FJEVTYP', 'jevh.FJEVDATE')
+                    ->where('jevh.FJEVTYP','=',$request->FJEVTYP)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->whereBetween('jevh.FJEVDATE',[$request->from,$request->to])
+                    // ->groupBy('jevh.FJEVNO')
+                    ->get();
+
+            return $details;
+    }
 
     // CRUD
 
