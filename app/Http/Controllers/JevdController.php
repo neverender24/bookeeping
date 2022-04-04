@@ -191,6 +191,7 @@ class JevdController extends Controller
                     ->where('jevd.FJEVNO','=',$request->FJEVNO)
                     ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
                     ->where('jevd.fiscalyear','=',$request->fiscalyear)
+                    ->groupBy('recid')
                     ->get();
         
             return $details;
