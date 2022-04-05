@@ -10,9 +10,10 @@ export const store = new Vuex.Store({
             reportsModal:false,
             reportsModalTitle:"",
         },
-
+        
         searchBox: "",
         user: [],
+        totalSum: {},
         filterData: {},
         primaryModal: false,
         primaryModalTitle: "",
@@ -31,12 +32,13 @@ export const store = new Vuex.Store({
             editJevdModal: false,
             editJevdModalTitle: ""
         },
+        jevdCredit:"",
+        jevdDedit:"",
 
         jevhDetailsModal:{
             jevhModal: false,
             editJevhModalTitle: ""
-        }
-
+        },
 
     },
     getters: {
@@ -79,6 +81,10 @@ export const store = new Vuex.Store({
             state.primaryModal = true
         },
 
+        total(state, payload){
+            state.totalSum = payload
+        },
+
         refreshTheTable(state) {
             state.refreshTable = !state.refreshTable
         },
@@ -99,7 +105,11 @@ export const store = new Vuex.Store({
             state.jevhDetailsModal.editJevhModalTitle = payload.title;
             state.jevhDetailsModal.jevhModal = payload.isTrue
         },
-
+        editjevh(state, payload) {
+            state.jevhDetailsModal.jevhModal = true;
+            state.jevhDetailsModal.editJevhModalTitle = payload.title
+            state.editData = payload.data 
+        },
 
     },
     actions: {

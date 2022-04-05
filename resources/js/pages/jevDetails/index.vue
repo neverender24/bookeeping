@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Journal Entry Vouchers</h5>
-                    <button
+                    <button data-bs-toggle="tooltip" data-bs-placement="top" title="Close"
                         type="button"
                         class="btn-close"
                         @click="close_modal()"
@@ -141,24 +141,20 @@
                                                 </tr>
                                             </tbody>
                                         </datatable>
-                                        <!-- <div class="justify align-left">
-                                            <div class="pt-2 m-1">
-                                                <div class="row g-2">
-                                                    <div class="col-sm">
-                                                        <div class="form-floating">
-                                                            <input type="text" class="form-control" style="width: 200px; height:30px;" id="floatingInputGrid" readonly>
-                                                            <label for="floatingInputGrid">Total Debit</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <div class="form-floating">
-                                                            <input type="text" class="form-control" style="width: 200px; height:30px;" id="floatingInputGrid" readonly >
-                                                            <label for="floatingInputGrid">Total Credit</label>
-                                                        </div>
-                                                    </div>
+                                        <div class="row justify-content-end">
+                                            <div class="col-2">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control fw-bold" style="width: 150px; height:55px;" readonly v-model="sum.totalDebit">
+                                                    <label for="floatingInputGrid">Total Debit</label>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                            <div class="col-2">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control fw-bold" style="width: 150px; height:55px;" readonly v-model="sum.totalCredit">
+                                                    <label for="floatingInputGrid">Total Credit</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -202,7 +198,6 @@ export default {
     components: {
         datatable: Datatable,
         editJevdModal: EditModal,
-        
 
     },
     
@@ -277,8 +272,9 @@ export default {
         ...mapState({
             primaryModal: state => state.primaryModal,
             editDetailsModal: state => state.editDetailsModal,
-            refreshTable: state => state.refreshTable
-            
+            refreshTable: state => state.refreshTable,
+            sum: state => state.totalSum,
+
         }),
 
         ...mapGetters([
@@ -290,6 +286,7 @@ export default {
     watch: {
         refreshTable() {
             this.getData()
+            this.getTotal()
         }
     },
 
@@ -300,6 +297,7 @@ export default {
 
         this.getData();
         this.getFundDetails()
+        this.getTotal()
     },
 
     methods: {
@@ -315,16 +313,22 @@ export default {
             let loader = this.$loading.show();
             await axios.post(url, this.details).then((response) => {
                 let data = response.data;
-                
+
                 // if (this.tableData.draw == data.draw) {
                     this.data = data;
                     // this.configPagination(response);
                 // }
-    
+
                  loader.hide()
             });
             this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
         
+        },
+
+        getTotal() {
+            axios.post('jevd/jevdTotal',  { FJEVNO: this.details.FJEVNO , FUND_SCODE:  this.details.FUND_SCODE, fiscalyear: this.details.fiscalyear }).then(response => {
+                this.$store.commit('total', response.data)
+            })
         },
 
         async getFundDetails(url = "fundDetails/getFundDetails") {
@@ -333,9 +337,8 @@ export default {
                 });
 
             },
+        
 
-        // end of datatable pagination functions
-       
         advance_filtering() {
             this.filtering = !this.filtering
         },

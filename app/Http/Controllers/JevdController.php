@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Jevd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
 
 class JevdController extends Controller
 {
@@ -66,6 +67,34 @@ class JevdController extends Controller
             return $details;
        
     }
+    public function jevdTotal(Request $request)
+    {
+        $totalSum = DB::table('jevd')
+                    ->select(DB::raw('FORMAT(SUM(jevd.FCREDIT),2) as totalCredit,FORMAT(SUM(jevd.FDEBIT),2) as totalDebit')
+                    
+                    )
+                    ->leftJoin('chartofaccounts', function ($query) {
+                        $query->on('chartofaccounts.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('jevd.fiscalyear', '>=', 'chartofaccounts.fiscalyear')
+                            ->on('jevd.fiscalyear', '<=', 'chartofaccounts.fiscalyear_to');
+                    })
+                    ->leftJoin('subaccounts1', function ($query) {
+                        $query->on('subaccounts1.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('subaccounts1.FSUBCDE', '=', 'jevd.FSUBCDE');
+                    })
+                    ->leftJoin('subaccounts2', function ($query) {
+                        $query->on('subaccounts2.FACTCODE', '=', 'jevd.FACTCODE')
+                            ->on('subaccounts2.FSUBCDE', '=', 'jevd.FSUBCDE')
+                            ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
+                    })
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE')
+                    ->where('jevd.FJEVNO','=',$request->FJEVNO)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->where('jevd.fiscalyear','=',$request->fiscalyear)
+                    ->first();
+
+            return $totalSum;
+    }
 
     public function search($collection, $searchValue) {
         if ($searchValue) {
@@ -90,8 +119,7 @@ class JevdController extends Controller
                         'jevh.FAPPVD',
                         'jevh.FJEVDATE',
                         'jevh.FCHKNO',
-                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit')
-                    
+                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
                     )
                     ->leftjoin('jevh', function ($query){
                         $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
@@ -197,8 +225,7 @@ class JevdController extends Controller
                             ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
                         })->where('jevd.recid',$request->id)->first();
 
-                        return $details;
-
+                        return $details;    
     }
 
     public function update_jdetails(Request $request)
