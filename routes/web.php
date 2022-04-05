@@ -52,10 +52,8 @@ Route::post('store_jdetails', 'JevdController@store_jdetails');
 Route::post('edit_jdetails', 'JevdController@edit_jdetails');
 Route::post('update_jdetails', 'JevdController@update_jdetails');
 Route::post('delete_details', 'JevdController@delete_details')->name('delete_details');
-Route::get('export-jevd', 'JevdController@exportJevd');
+Route::get('print-jevd', 'JevdController@jevdPrintReport');
 Route::get('export-jevtype', 'JevdController@exportJevtypeReport');
 
 
 //testing data source
-
-Route::get('print-jevd', 'JevdController@jevdPrintReport');
