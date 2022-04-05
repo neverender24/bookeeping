@@ -11,6 +11,14 @@
                         aria-label="Close"
                     ></button>
                 </div>
+                    <div class="col-auto" align="right">
+                            <button class="btn app-btn-secondary" @click="create()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                                </svg>
+                                New Record
+                            </button>
+                    </div>
                 <div class="modal-body">
                     <div class="app-card app-card-orders-table shadow-sm mb-2">
 			            <div class="card-body">
@@ -21,7 +29,6 @@
                                             <input type="text" class="form-control fw-bold"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
                                             <label for="floatingInput">JEV TYPE</label>
                                         </div>
-
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control fw-bold"  readonly id="floatingInput"  v-model="fundDetailsName" >
                                             <label for="floatingInput">FUND</label>
@@ -81,7 +88,7 @@
                                         <datatable :columns="columns">
                                             <tbody>
                                                 <tr v-for="item in data" :key="item.id">
-                                                    <!-- <td>
+                                                    <td>
                                                         <span v-if="item.FTITLE && item.FACTCODE">
                                                             {{ item.FTITLE }} , ({{ item.FACTCODE }})
                                                         </span>
@@ -95,14 +102,14 @@
                                                         <span v-if="item.FSUBCDE && item.FSTITLE2">
                                                             {{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})
                                                         </span> 
-                                                    </td> -->
+                                                    </td>
                                                     <td>{{ item.FTITLE}}</td>
                                                     <td>{{ item.FACTCODE}}</td>
                                                     <td>{{ item.FSTITLE}}</td>
                                                     <td>{{ item.FSUBCDE}}</td>
                                                     <td>{{ item.FSTITLE2}}</td>
                                                     <td>{{ item.FSUBCDE2}}</td>
-                                                    
+
                                                     <td>{{ item.FRESPCTR}}</td>
                                                     <td>{{ item.FVOUCHNO}}</td>
                                                     <td>{{ item.FALOBNO}}</td>
@@ -216,7 +223,7 @@ export default {
          */
 
         let columns = [
-
+            
             { width: "10%", label: "ActCode Title", name: "FTITLE "},
             { width: "10%", label: "ActCode", name: "FACTCODE"},
             { width: "10%", label: "SubCode Title", name: "FTITLE"},
@@ -346,6 +353,9 @@ export default {
         },
 
         // Crud for JEVD
+        async create() {
+            this.$store.commit('setDetailsModalState', { title:"Add new journal", isTrue:true})
+        },
 
         async edit_details(item) {
             this.item = item;
