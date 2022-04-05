@@ -152,38 +152,38 @@ class JevdController extends Controller
     }
 
 
-    // public function exportJevtypeReport(Request $request)
-    // {
-    //     $details = DB::table('jevd')
-    //                 ->select(
-    //                     'jevd.*',
-    //                     'jevh.FJEVTYP',
-    //                     'jevh.FPAYEE',
-    //                     'jevh.FJEVDATE',
-    //                     'funds_details.FUNDDETAIL_NAME',
-    //                     // DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
-    //                     DB::raw('CASE WHEN jevd.FDEBIT = 10101010 THEN jevd.FDEBIT ELSE NULL END) AS debit10101010,
-    //                     (CASE WHEN jevd.FCREDIT = 40102080 then jevd.FCREDIT ELSE NULL END) AS credit40102080,
-    //                     (CASE WHEN jevd.FCREDIT = 40102040 then jevd.FCREDIT ELSE NULL END) AS credit40102040,
-    //                     (CASE WHEN jevd.FCREDIT = 40102050 then jevd.FCREDIT ELSE NULL END) AS credit40102050,' 
-    //                 ),
+    public function exportJevtypeReport(Request $request)
+    {
+        $details = DB::table('jevd')
+                    ->select(
+                        'jevd.*',
+                        'jevh.FJEVTYP',
+                        'jevh.FPAYEE',
+                        'jevh.FJEVDATE',
+                        'funds_details.FUNDDETAIL_NAME',
+                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
+                    //     DB::raw('CASE WHEN jevd.FDEBIT = (jevd.FACTCODE=10101010) THEN jevd.FDEBIT ELSE NULL END AS debit10101010,
+                    //     CASE WHEN jevd.FCREDIT = (jevd.FACTCODE=40102080) then jevd.FCREDIT ELSE NULL END AS credit40102080,
+                    //     CASE WHEN jevd.FCREDIT = (jevd.FACTCODE=40102040) then jevd.FCREDIT ELSE NULL END AS credit40102040,
+                    //     CASE WHEN jevd.FCREDIT = (jevd.FACTCODE=40102050) then jevd.FCREDIT ELSE NULL END AS credit40102050,' 
+                    // ),
 
                         
-    //                 )
-    //                 ->leftJoin('jevh', function($query){
-    //                     $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
-    //                     ->on('jevh.FJEVNO', '=', 'jevd.FJEVNO')
-    //                     ->on('jevh.fiscalyear', '=', 'jevd.fiscalyear');                     
-    //                 })
-    //                 ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE', 'jevh.FJEVTYP', 'jevh.FJEVDATE')
-    //                 ->where('jevh.FJEVTYP','=','2')
-    //                 ->where('jevd.FUND_SCODE','=','222')
-    //                 ->whereBetween('jevh.FJEVDATE',['2021-01-01','2021-01-30'])
-    //                 ->groupBy('jevd.recid')
-    //                 ->get();
+                    )
+                    ->leftJoin('jevh', function($query){
+                        $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
+                        ->on('jevh.FJEVNO', '=', 'jevd.FJEVNO')
+                        ->on('jevh.fiscalyear', '=', 'jevd.fiscalyear');                     
+                    })
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE', 'jevh.FJEVTYP', 'jevh.FJEVDATE')
+                    ->where('jevh.FJEVTYP','=','2')
+                    ->where('jevd.FUND_SCODE','=','222')
+                    ->whereBetween('jevh.FJEVDATE',['2021-01-01','2021-01-30'])
+                    ->groupBy('jevd.recid')
+                    ->get();
 
-    //         return $details;
-    // }
+            return $details;
+    }
 
     // CRUD
 
