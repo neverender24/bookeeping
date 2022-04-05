@@ -11,14 +11,6 @@
                         aria-label="Close"
                     ></button>
                 </div>
-                    <div class="col-auto" align="right">
-                            <button class="btn app-btn-secondary" @click="create()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-                                </svg>
-                                New Record
-                            </button>
-                    </div>
                 <div class="modal-body">
                     <div class="app-card app-card-orders-table shadow-sm mb-2">
 			            <div class="card-body">
@@ -354,9 +346,6 @@ export default {
         },
 
         // Crud for JEVD
-        async create() {
-            this.$store.commit('setDetailsModalState', { title:"Add new journal", isTrue:true})
-        },
 
         async edit_details(item) {
             this.item = item;
