@@ -44,7 +44,7 @@ class JevhController extends Controller
             });
         }
     }
-    
+
     public function getJevtype()
     {
         return $this->model->select(DB::raw('TRIM(FJEVTYP) as FJEVTYP'))->get();
@@ -108,4 +108,58 @@ class JevhController extends Controller
         
         return $index;
     }
+    public function store_jevh(Request $request) 
+    {   
+        return $this->model->create($request->all());
+    }
+
+    public function get_jevtyp_details()
+    {
+        return DB::table('funds_details')->select(DB::raw('TRIM(funds_details.FUND_SCODE) as FUND_SCODE'), 'FUNDDETAIL_NAME')->get();
+    }
+
+    public function getJevtypdetails()
+    {
+        return DB::table('jevh')->select(DB::raw('TRIM(jevh.FJEVTYP)'))->get();
+    }
+
+    public function edit_jevh_details(Request $request)
+    {
+        $jevhdetails = DB::table('jevh')
+                    ->select('jevh.*',
+                            'funds_details.FUND_SCODE',
+                            'jevh.FJEVNO',
+                            'jevh.FJEVTYP',
+                            'jevh.FJEVNO',
+                            'jevh.FCHKNO',
+                            'jevh.FREMK',
+                            'jevh.FPREPBY',
+                            'jevh.FPREPD',
+                            'jevh.FAPPVBY',
+                            DB::raw('TRIM(jevh.FUND_SCODE), TRIM(jevh.FJEVTYP), TRIM(jevh.FREMK)')
+                            )
+                            ->leftjoin('funds_details', function($query) {
+                                $query->on('jevh.FUND_SCODE', '=', 'funds_details.FUND_SCODE');
+                            })
+                            ->where('jevh.recid', $request->id)->first();
+
+                            return $jevhdetails;
+    }
+
+    public function update_jevh_details(Request $request)
+    {
+        $data = $this->model->where('recid', $request->recid)->first();
+        $data->update($request->all());
+
+        return "Success!";
+    }
+
+    public function delete_jevh_entry(Request $request)
+    {
+        $data = $this->model->findOrFail($request->id);
+        $data->delete();
+
+        return "Deleted!";
+    }
+
 }

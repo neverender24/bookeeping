@@ -10,10 +10,10 @@ export const store = new Vuex.Store({
             reportsModal:false,
             reportsModalTitle:"",
         },
-
+        
         searchBox: "",
         user: [],
-        totalSum: "",
+        totalSum: {},
         filterData: {},
         primaryModal: false,
         primaryModalTitle: "",
@@ -31,9 +31,15 @@ export const store = new Vuex.Store({
         editDetailsModal:{
             editJevdModal: false,
             editJevdModalTitle: ""
-        }
-        
-   
+        },
+        jevdCredit:"",
+        jevdDedit:"",
+
+        jevhDetailsModal:{
+            jevhModal: false,
+            editJevhModalTitle: ""
+        },
+
     },
     getters: {
          isAdmin: async state => {
@@ -95,6 +101,15 @@ export const store = new Vuex.Store({
             state.editData = payload.data
         },
 
+        setJevhDetailsModalState(state, payload){
+            state.jevhDetailsModal.editJevhModalTitle = payload.title;
+            state.jevhDetailsModal.jevhModal = payload.isTrue
+        },
+        editjevh(state, payload) {
+            state.jevhDetailsModal.jevhModal = true;
+            state.jevhDetailsModal.editJevhModalTitle = payload.title
+            state.editData = payload.data 
+        },
 
     },
     actions: {

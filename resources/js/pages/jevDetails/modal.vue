@@ -145,12 +145,14 @@ export default {
        this.getAllDetails(),
        this.getJDetails(),
        this.getJDetailssubcode()
+       this.total = this.fromTotalState
     },
 
     computed: {
         ...mapState({
              editDetailsModal: state => state.editDetailsModal,
-             editjev: state => state.editData
+             editjev: state => state.editData,
+             fromTotalState: state => state.totalSum,
         }),
     },
 
@@ -174,22 +176,27 @@ export default {
         },
 
         save_edit() {
-             if ( this.is_edit() ){
-                axios.post('update_jdetails', this.formData).then( response => {
-                    this.$snotify.success("Record added", "success!");
-                    this.close_modal()
-                })
+             if (this.formData.FDEBIT != this.formData.FCREDIT) {
+                 this.$snotify.error('Make sure the Debit and Credit are Equal');
              } else {
-                 axios.post('store_jdetails', this.formData).then( response => {
-                     this.$snotify.success("Record Added", "Success!");
-                     this.close_modal()
-                 })
+                 if ( this.is_edit() ){
+                    axios.post('update_jdetails', this.formData).then( response => {
+                        this.$snotify.success("Record added", "success!");
+                        this.$store.commit('refreshTheTable')
+                        this.close_modal()
+                    })
+                } else {
+                    axios.post('store_jdetails', this.formData).then( response => {
+                        this.$snotify.success("Record Added", "Success!");
+                        this.$store.commit('refreshTheTable')
+                        this.close_modal()
+                    })
+                }
              }
         },
 
         close_modal() {
             this.myModal2.hide()
-            this.$store.commit('refreshTheTable')
             this.$store.commit('setDetailsModalState', {title:"", isTrue:false})
             
         },

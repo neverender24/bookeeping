@@ -11,14 +11,6 @@
                         aria-label="Close"
                     ></button>
                 </div>
-                    <div class="col-auto" align="right">
-                            <button class="btn app-btn-secondary" @click="create()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                    <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
-                                </svg>
-                                New Record
-                            </button>
-                    </div>
                 <div class="modal-body">
                     <div class="app-card app-card-orders-table shadow-sm mb-2">
 			            <div class="card-body">
@@ -205,7 +197,6 @@ export default {
     components: {
         datatable: Datatable,
         editJevdModal: EditModal,
-        
 
     },
     
@@ -285,7 +276,7 @@ export default {
             editDetailsModal: state => state.editDetailsModal,
             refreshTable: state => state.refreshTable,
             sum: state => state.totalSum,
-            
+
         }),
 
         ...mapGetters([
@@ -297,6 +288,7 @@ export default {
     watch: {
         refreshTable() {
             this.getData()
+            this.getTotal()
         }
     },
 
@@ -307,6 +299,7 @@ export default {
 
         this.getData();
         this.getFundDetails()
+        this.getTotal()
     },
 
     methods: {
@@ -327,11 +320,17 @@ export default {
                     this.data = data;
                     // this.configPagination(response);
                 // }
-    
+
                  loader.hide()
             });
             this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
         
+        },
+
+        getTotal() {
+            axios.post('jevd/jevdTotal',  { FJEVNO: this.details.FJEVNO , FUND_SCODE:  this.details.FUND_SCODE, fiscalyear: this.details.fiscalyear }).then(response => {
+                this.$store.commit('total', response.data)
+            })
         },
 
         async getFundDetails(url = "fundDetails/getFundDetails") {
@@ -341,15 +340,12 @@ export default {
 
             },
         
-       
+
         advance_filtering() {
             this.filtering = !this.filtering
         },
 
         // Crud for JEVD
-        async create() {
-            this.$store.commit('setDetailsModalState', { title:"Add new journal", isTrue:true})
-        },
 
         async edit_details(item) {
             this.item = item;

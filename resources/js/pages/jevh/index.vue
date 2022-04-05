@@ -41,6 +41,14 @@
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
                 
+                <div class="col-auto" align="right">
+                            <button class="btn app-btn-secondary" @click="create()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-00lg" viewBox="0 0 16 16">
+                                    <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                                </svg>
+                                New Record
+                            </button>
+                </div>
 			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
                 <download-excel data-bs-toggle="tooltip" data-bs-placement="top" title="Download Data to Excel"
                     class="btn btn-warning"
@@ -54,6 +62,7 @@
                 Download Data
                 </download-excel>
                 
+
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
 			        <div class="card-body">
                         <datatable
@@ -70,19 +79,44 @@
                                     <td>{{ item.FPAYEE }}</td>
                                     <td>{{ item.FREMK }}</td>
                                     <td>
-                                        <div class="btn btn-group">
-                                            <a class="dropdown-item p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Show Details" @click="show_details(item)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                                                </svg>
-                                            </a>
-                                            <a class="dropdown-item p-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Print" @click="print_report(item)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
-                                                    <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
-                                                    <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-                                                </svg>
-                                            </a>
+                                        <div class="app-card-actions">
+                                            <div class="dropdwon">
+                                                <div class="dropdown-toggle no-toggle-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-three-dots-vertical" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path path fill-rule="evenodd" d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
+                                                    </svg>
+                                                </div>
+                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-end-lg-start" style="font-size: .8125rem">
+                                                <li>
+                                                        <button class="dropdown-item" @click="show_details(item)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                                            </svg> Show Details
+                                                        </button>
+
+                                                        <button class="dropdown-item" @click="print_report(item)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                                                <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                                                                <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                                                            </svg> Print Report
+                                                        </button>
+
+                                                        <button class="dropdown-item" @click="edit_jevh_details(item)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                            </svg> Edit
+                                                        </button>
+
+                                                        <button class="dropdown-item" @click="delete_jevh_entry(item, item.recid)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                                        </svg> Delete
+                                                        </button>
+                                                </li>
+                                            </ul>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -126,6 +160,9 @@
                 v-if="jevModal" 
                 :details="jev_details"
             ></modal-details>
+
+            <jevh-modal v-if="jevhDetailsModal.jevhModal"></jevh-modal>
+
 		    </div>
 </template>
 
@@ -136,6 +173,7 @@ import { mapState, mapGetters } from "vuex";
 import ModalDetails from "../jevDetails/index";
 import AdvancedFilter from "./advanceFilter.vue";
 import Modal from "./reportsmodal.vue"
+import JevhdetailsModal from './jevhdetailsModal.vue';
 
 export default {
     components: {
@@ -144,6 +182,8 @@ export default {
         modalDetails: ModalDetails,
         advancedFilter: AdvancedFilter,
         reportsModal: Modal,
+        jevhModal: JevhdetailsModal,
+
         
     },
 
@@ -211,7 +251,15 @@ export default {
                 "Check No.": "FCHKNO",
                 "Payee": "FPAYEE"    	
                 
-            }
+            },
+            jevtype:{
+                1:"Collection",
+                2:"Check Disbursement",
+                3:"Cash Disbursement",
+                4:"General",
+                5:"ADA",
+                6:"Procurement"
+            },
             //end of datatable variables.
             //you can add below other variables.
         };
@@ -223,7 +271,7 @@ export default {
             filterData: state => state.filterData,
             jevModal: state => state.jevModal,
             report: state => state.report,
-
+            jevhDetailsModal: state => state.jevhDetailsModal
         }),
 
         ...mapGetters([
@@ -282,9 +330,7 @@ export default {
             
             this.$store.commit('setJevhModalState', {title:"Jevh Details", isOpen:true})
             this.jev_details = item
-            axios.post('jevd/jevdTotal',  { FJEVNO: this.jev_details.FJEVNO , FUND_SCODE: this.jev_details.FUND_SCODE, fiscalyear: this.jev_details.fiscalyear }).then(response => {
-                this.$store.commit('total', response.data)
-            })
+            
     
         },
         print_report(data){
@@ -332,7 +378,61 @@ export default {
             this.$store.commit('reportsModalSate', {title:"Filter Report", isTrue:true})
             
         },
+
+        // Start of the CRUD
+        create() {
+            this.$store.commit('setJevhDetailsModalState', { title: "Add Journal Entry Voucher", isTrue:true})
+        },
+
+        async edit_jevh_details(item){
+            this.item = item;
+            await axios.post('edit_jevh_details', { id: this.item.recid }).then(response => {
+                this.$store.commit('editjevh', { title: "Edit Jev Entry", data:response.data})
+            })
+        },
         
+        delete_jevh_entry(item,id) {
+            this.item = item;
+            return this.$snotify.confirm(
+                "Are you sure you want to delete?",
+                "Deletion",
+                {
+                    position: "centerCenter",
+                    backdrop: 0.4,
+                    buttons: [
+                        {
+                            text: "Yes",
+                            action: async (toast) => {
+                                await axios
+                                    .post("/delete_jevh_entry/", { id: id })
+                                    .then((response) => {
+                                        this.$snotify.success(
+                                            "Deleted successfully",
+                                            "Done"
+                                        );
+                                        this.$snotify.remove(toast.id);
+                                        this.getData();
+                                    })
+                                    .catch((error) => {
+                                        this.$snotify.error(
+                                            error.response.data.message,
+                                            "Error"
+                                        );
+                                        this.$snotify.remove(toast.id);
+                                    });
+                            },
+                        },
+                        {
+                            text: "No",
+                            action: (toast) => {
+                                this.$snotify.remove(toast.id);
+                            },
+                            bold: true,
+                        },
+                    ],
+                }
+            );
+        }
     },
 };
 </script>

@@ -121,7 +121,6 @@ class JevdController extends Controller
                         'jevh.FJEVDATE',
                         'jevh.FCHKNO',
                         DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
-                        
                     )
                     ->leftjoin('jevh', function ($query){
                         $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
@@ -262,8 +261,7 @@ class JevdController extends Controller
                             ->on('subaccounts2.FSUBCDE2', '=', 'jevd.FSUBCDE2');
                         })->where('jevd.recid',$request->id)->first();
 
-                        return $details;
-
+                        return $details;    
     }
 
     public function update_jdetails(Request $request)
