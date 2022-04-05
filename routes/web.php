@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -63,3 +64,7 @@ Route::post('getJevtypdetails', 'JevhController@getJevtypdetails');
 Route::post('delete_jevh_entry', 'JevhController@delete_jevh_entry');
 Route::post('edit_jevh_details', 'JevhController@edit_jevh_details');
 Route::post('update_jevh_details', 'JevhController@update_jevh_details');
+
+// Reports
+Route::get('print-jevd', 'JevdController@jevdPrintReport');
+Route::get('export-jevtype', 'JevdController@exportJevtypeReport');

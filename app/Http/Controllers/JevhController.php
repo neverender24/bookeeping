@@ -30,7 +30,7 @@ class JevhController extends Controller
 
     	return ['data'=>$index, 'draw'=> $request->draw];
     }
-
+    
     
     public function search($collection, $searchValue) {
         if ($searchValue) {
@@ -53,38 +53,38 @@ class JevhController extends Controller
     public function export(Request $request)
     {
         $searchValue    = $request->search;
-
+        
         $index = $this->getClause($request);
-
+        
         $index = $index->orderBy('FJEVNO', 'asc');
-
+        
         $this->search($index, $searchValue);
-
+        
         $index = $index->get();
-
+        
         return ['data'=>$index, 'draw'=> $request->draw];
     }
     
     public function getClause($request)
     {
         $index = $this->model;
-
+        
         if ($request->FUND_SCODE) {
             $index = $index->where('FUND_SCODE', $request->FUND_SCODE);
         }
-
+        
         if ($request->FJEVNO) {
             $index = $index->where('FJEVNO', 'like' , '%'.$request->FJEVNO.'%');
         }
-
+        
         if ($request->FCHKNO) {
             $index = $index->where('FCHKNO', 'like' , '%'.$request->FCHKNO.'%');
         }
-
+        
         if ($request->FREFNO) {
             $index = $index->where('FREFNO', 'like' , '%'.$request->FREFNO.'%');
         }
-
+        
         if ($request->FJEVTYP) {
             $index = $index->where('FJEVTYP', 'like' , '%'.$request->FJEVTYP.'%');
         }
@@ -96,7 +96,7 @@ class JevhController extends Controller
         if (($request->from && !$request->to) || ($request->to && !$request->from)) {
             
             $date = $request->from ? $request->from : $request->to;
-
+            
             $index = $index->whereDate('FJEVDATE', $date);
         } 
         if($request->from && $request->to) {

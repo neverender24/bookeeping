@@ -89,7 +89,7 @@
                                         <datatable :columns="columns">
                                             <tbody>
                                                 <tr v-for="item in data" :key="item.id">
-                                                    <td>
+                                                    <!-- <td>
                                                         <span v-if="item.FTITLE && item.FACTCODE">
                                                             {{ item.FTITLE }} , ({{ item.FACTCODE }})
                                                         </span>
@@ -103,7 +103,14 @@
                                                         <span v-if="item.FSUBCDE && item.FSTITLE2">
                                                             {{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})
                                                         </span> 
-                                                    </td>
+                                                    </td> -->
+                                                    <td>{{ item.FTITLE}}</td>
+                                                    <td>{{ item.FACTCODE}}</td>
+                                                    <td>{{ item.FSTITLE}}</td>
+                                                    <td>{{ item.FSUBCDE}}</td>
+                                                    <td>{{ item.FSTITLE2}}</td>
+                                                    <td>{{ item.FSUBCDE2}}</td>
+                                                    
                                                     <td>{{ item.FRESPCTR}}</td>
                                                     <td>{{ item.FVOUCHNO}}</td>
                                                     <td>{{ item.FALOBNO}}</td>
@@ -217,10 +224,13 @@ export default {
          */
 
         let columns = [
-            
-            { width: "10%", label: "Title/ActCode", name: "FACTCODE "},
-            { width: "10%", label: "Title/SubCode", name: "FSTITLE"},
-            { width: "10%", label: "Title/SubCode2", name: "FSTITLE2 "},
+
+            { width: "10%", label: "ActCode Title", name: "FTITLE "},
+            { width: "10%", label: "ActCode", name: "FACTCODE"},
+            { width: "10%", label: "SubCode Title", name: "FTITLE"},
+            { width: "10%", label: "SubCode", name: "SubCode"},
+            { width: "10%", label: "SubCode2 Title", name: "FTITLE2 "},
+            { width: "10%", label: "SubCode2", name: "SubCode2 "},
             { width: "10%", label: "RespCtr", name: "FRESPCTR"},
             { width: "10%", label: "Voucher", name: "FVOUCHNO"},
             { width: "10%", label: "OBR #", name: "FALOBNO"},
