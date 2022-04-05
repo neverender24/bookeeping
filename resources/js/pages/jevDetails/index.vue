@@ -29,6 +29,7 @@
                                             <input type="text" class="form-control fw-bold"  readonly id="floatingInput"  v-model="jevtype[details.FJEVTYP]">
                                             <label for="floatingInput">JEV TYPE</label>
                                         </div>
+
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control fw-bold"  readonly id="floatingInput"  v-model="fundDetailsName" >
                                             <label for="floatingInput">FUND</label>
@@ -103,13 +104,6 @@
                                                             {{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})
                                                         </span> 
                                                     </td>
-                                                    <td>{{ item.FTITLE}}</td>
-                                                    <td>{{ item.FACTCODE}}</td>
-                                                    <td>{{ item.FSTITLE}}</td>
-                                                    <td>{{ item.FSUBCDE}}</td>
-                                                    <td>{{ item.FSTITLE2}}</td>
-                                                    <td>{{ item.FSUBCDE2}}</td>
-
                                                     <td>{{ item.FRESPCTR}}</td>
                                                     <td>{{ item.FVOUCHNO}}</td>
                                                     <td>{{ item.FALOBNO}}</td>
@@ -224,12 +218,9 @@ export default {
 
         let columns = [
             
-            { width: "10%", label: "ActCode Title", name: "FTITLE "},
-            { width: "10%", label: "ActCode", name: "FACTCODE"},
-            { width: "10%", label: "SubCode Title", name: "FTITLE"},
-            { width: "10%", label: "SubCode", name: "SubCode"},
-            { width: "10%", label: "SubCode2 Title", name: "FTITLE2 "},
-            { width: "10%", label: "SubCode2", name: "SubCode2 "},
+            { width: "10%", label: "Title/ActCode", name: "FACTCODE "},
+            { width: "10%", label: "Title/SubCode", name: "FSTITLE"},
+            { width: "10%", label: "Title/SubCode2", name: "FSTITLE2 "},
             { width: "10%", label: "RespCtr", name: "FRESPCTR"},
             { width: "10%", label: "Voucher", name: "FVOUCHNO"},
             { width: "10%", label: "OBR #", name: "FALOBNO"},

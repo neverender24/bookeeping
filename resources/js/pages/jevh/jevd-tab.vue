@@ -285,7 +285,7 @@ export default {
 
                  loader.hide()
             });
-            // this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
+            //this.fundDetailsName = this.data[0].FUNDDETAIL_NAME
         
         },
 
