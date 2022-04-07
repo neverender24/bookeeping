@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie' , 'export-jevd'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie' , 'print-jevd' , 'jevtype-subset-report', 'export-jevtype'],
 
     'allowed_methods' => ['*'],
 
