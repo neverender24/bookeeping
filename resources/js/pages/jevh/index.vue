@@ -41,14 +41,14 @@
 				    </div><!--//col-auto-->
 			    </div><!--//row-->
                 
-                <div class="col-auto" align="right">
+                <!-- <div class="col-auto" align="right">
                             <button class="btn app-btn-secondary" @click="create()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-00lg" viewBox="0 0 16 16">
                                     <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
                                 </svg>
                                 New Record
                             </button>
-                </div>
+                </div> -->
 			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
                 <download-excel data-bs-toggle="tooltip" data-bs-placement="top" title="Download Data to Excel"
                     class="btn btn-warning"
@@ -95,7 +95,7 @@
                                                             </svg> Show Details
                                                         </button>
 
-                                                        <button class="dropdown-item" @click="print_report(item)">
+                                                        <!-- <button class="dropdown-item" @click="print_report(item)">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
                                                                 <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
                                                                 <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
@@ -113,7 +113,7 @@
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
                                                         </svg> Delete
-                                                        </button>
+                                                        </button> -->
                                                 </li>
                                             </ul>
                                             </div>
@@ -223,7 +223,7 @@ export default {
             columns: columns,
             tableData: {
                 draw: 0,
-                length: 5,
+                length: 10,
                 search: "",
             },
             pagination: {
@@ -250,7 +250,7 @@ export default {
                 "Date": "FJEVDATE",
                 "Check No.": "FCHKNO",
                 "Payee": "FPAYEE"    	
-                
+
             },
             jevtype:{
                 1:"Collection",
@@ -281,7 +281,7 @@ export default {
     },
 
     watch: {
-        refreshTable() {
+        refreshTable: function() {
             this.getData()
         },
     },
@@ -380,9 +380,17 @@ export default {
         },
 
         // Start of the CRUD
+
         create() {
             this.$store.commit('setJevhDetailsModalState', { title: "Add Journal Entry Voucher", isTrue:true})
         },
+
+        close() 
+        {
+            this.myModal.hide();
+            this.$store.commit('setJevhModalState', {title:"", isOpen:false})
+        },
+        
 
         async edit_jevh_details(item){
             this.item = item;

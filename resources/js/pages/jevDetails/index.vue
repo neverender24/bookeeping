@@ -7,18 +7,18 @@
                     <button data-bs-toggle="tooltip" data-bs-placement="top" title="Close"
                         type="button"
                         class="btn-close"
-                        @click="close_modal()"
+                        @click="close()"
                         aria-label="Close"
                     ></button>
                 </div>
-                    <div class="col-auto" align="right">
+                    <!-- <div class="col-auto" align="right">
                             <button class="btn app-btn-secondary" @click="create()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                     <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
                                 </svg>
                                 New Record
                             </button>
-                    </div>
+                    </div> -->
                 <div class="modal-body">
                     <div class="app-card app-card-orders-table shadow-sm mb-2">
 			            <div class="card-body">
@@ -89,21 +89,13 @@
                                         <datatable :columns="columns">
                                             <tbody>
                                                 <tr v-for="item in data" :key="item.id">
-                                                    <td>
-                                                        <span v-if="item.FTITLE && item.FACTCODE">
-                                                            {{ item.FTITLE }} , ({{ item.FACTCODE }})
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span v-if="item.FSTITLE && item.FSUBCDE">
-                                                            {{ item.FSTITLE }} , ({{ item.FSUBCDE }})
-                                                        </span>
-                                                    </td>
-                                                    <td >
-                                                        <span v-if="item.FSUBCDE && item.FSTITLE2">
-                                                            {{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})
-                                                        </span> 
-                                                    </td>
+                                                    <td>{{ item.FTITLE}}</td>
+                                                    <td>{{ item.FACTCODE}}</td>
+                                                    <td>{{ item.FSTITLE}}</td>
+                                                    <td>{{ item.FSUBCDE}}</td>
+                                                    <td>{{ item.FSTITLE2}}</td>
+                                                    <td>{{ item.FSUBCDE2}}</td>
+
                                                     <td>{{ item.FRESPCTR}}</td>
                                                     <td>{{ item.FVOUCHNO}}</td>
                                                     <td>{{ item.FALOBNO}}</td>
@@ -111,7 +103,7 @@
                                                     <td>{{ item.jevdDebit}}</td>
                                                     <td>{{ item.jevdCredit }}</td>
                                                     <td>{{ item.FREMARKS }}</td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <div class="app-card-actions">
                                                             <div class="dropdwon">
                                                                 <div class="dropdown-toggle no-toggle-arrow" data-bs-toggle="dropdown" aria-expanded="false">
@@ -137,7 +129,7 @@
                                                             </ul>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> -->
                                                 </tr>
                                             </tbody>
                                         </datatable>
@@ -169,7 +161,7 @@
                     <button
                         type="button"
                         class="btn btn-secondary"
-                        @click="close_modal()"
+                        @click="close()"
                     >
                         Close
                     </button>
@@ -218,9 +210,12 @@ export default {
 
         let columns = [
             
-            { width: "10%", label: "Title/ActCode", name: "FACTCODE "},
-            { width: "10%", label: "Title/SubCode", name: "FSTITLE"},
-            { width: "10%", label: "Title/SubCode2", name: "FSTITLE2 "},
+            { width: "10%", label: "ActCode Title", name: "FTITLE "},
+            { width: "10%", label: "ActCode", name: "FACTCODE"},
+            { width: "10%", label: "SubCode Title", name: "FTITLE"},
+            { width: "10%", label: "SubCode", name: "SubCode"},
+            { width: "10%", label: "SubCode2 Title", name: "FTITLE2 "},
+            { width: "10%", label: "SubCode2", name: "SubCode2 "},
             { width: "10%", label: "RespCtr", name: "FRESPCTR"},
             { width: "10%", label: "Voucher", name: "FVOUCHNO"},
             { width: "10%", label: "OBR #", name: "FALOBNO"},
@@ -228,7 +223,7 @@ export default {
             { width: "10%", label: "Debit", name: "FDEBIT"},
             { width: "10%", label: "Credit", name: "FCREDIT"},
             { width: "10%", label: "Remarks", name: "FREMARKS"},
-            { width: "10%", label: "Action", name: "Action"},
+            // { width: "10%", label: "Action", name: "Action"},
             
         ];
 
@@ -302,7 +297,7 @@ export default {
 
     methods: {
 
-        close_modal() {
+        close() {
             this.myModal.hide();
             this.$store.commit('setJevhModalState', {title:"", isOpen:false})
             

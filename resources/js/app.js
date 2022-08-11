@@ -10,11 +10,13 @@ import router from "../js/routes"
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Snotify from 'vue-snotify';
+import Vuelidate from 'vuelidate';
 import 'vue-snotify/styles/material.css';
 import JsonExcel from "vue-json-excel";
 
 
 Vue.use(Snotify);
+Vue.use(Vuelidate)
 Vue.component("downloadExcel", JsonExcel);
 Vue.use(VueLoading, {
     // props

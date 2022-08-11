@@ -16,8 +16,8 @@ class JevdController extends Controller
     {
 
         $sortField     =  $request->sortBy;
-		$length         = $request->length;
-        $searchValue    = $request->search;
+		$length        = $request->length;
+        $searchValue   = $request->search;
 
         $index = $this->model->orderBy('recid', 'desc');
     
@@ -29,21 +29,19 @@ class JevdController extends Controller
         
         $index = $index->paginate($length);
 
-    	return ['data'=>$index, 'draw'=> $request->draw];
+        return ['data'=>$index, 'draw'=> $request->draw];
     }
     public function jevDetails(Request $request)
     {
         $details = DB::table('jevd')
-                    ->select(
-                        'jevd.*',
-                        'chartofaccounts.FTITLE',
-                        'subaccounts1.FTITLE',
-                        'subaccounts1.FSTITLE',
-                        'subaccounts2.FSTITLE2',
-                        'funds_details.FUNDDETAIL_NAME',
-                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit')
-                    
-                    )
+            ->select('jevd.*',
+                    'chartofaccounts.FTITLE',
+                    'subaccounts1.FTITLE',
+                    'subaccounts1.FSTITLE',
+                    'subaccounts2.FSTITLE2',
+                    'funds_details.FUNDDETAIL_NAME',
+                    DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit')
+                )
                     ->leftJoin('chartofaccounts', function ($query) {
                         $query->on('chartofaccounts.FACTCODE', '=', 'jevd.FACTCODE')
                             ->on('jevd.fiscalyear', '>=', 'chartofaccounts.fiscalyear')
@@ -65,7 +63,7 @@ class JevdController extends Controller
                     ->get();
 
             return $details;
-       
+
     }
     public function jevdTotal(Request $request)
     {
