@@ -50,7 +50,7 @@
                             </button>
                 </div> -->
 			   <advanced-filter v-if="filtering" @refresh="getData()"></advanced-filter>
-                <download-excel data-bs-toggle="tooltip" data-bs-placement="top" title="Download Data to Excel"
+                <!-- <download-excel data-bs-toggle="tooltip" data-bs-placement="top" title="Download Data to Excel"
                     class="btn btn-warning"
                     :fetch = "_export" 
                     id="exportId"
@@ -60,7 +60,7 @@
                     :fields="fieldNames"
                 >
                 Download Data
-                </download-excel>
+                </download-excel> -->
                 
 
 			    <div class="app-card app-card-orders-table shadow-sm mb-2">
