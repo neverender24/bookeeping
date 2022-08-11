@@ -18,7 +18,9 @@ export const store = new Vuex.Store({
         primaryModal: false,
         primaryModalTitle: "",
         refreshTable: false,
+        refreshjevdTable: false,
         editData: [],
+        editjevdData: [],
         jevModalTitle:"",
         jevModal:false,
         ppmpItems: {
@@ -98,19 +100,22 @@ export const store = new Vuex.Store({
         edit(state, payload) {
             state.editDetailsModal.editJevdModal = true;
             state.editDetailsModal.editJevdModalTitle = payload.title
-            state.editData = payload.data
+            state.editjevdData = payload.data
         },
 
         setJevhDetailsModalState(state, payload){
             state.jevhDetailsModal.editJevhModalTitle = payload.title;
             state.jevhDetailsModal.jevhModal = payload.isTrue
+            state.editData = payload.data 
         },
         editjevh(state, payload) {
             state.jevhDetailsModal.jevhModal = true;
             state.jevhDetailsModal.editJevhModalTitle = payload.title
             state.editData = payload.data 
         },
-
+        refreshjevd(state) {
+            state.refreshjevdTable = !state.refreshjevdTable
+        }
     },
     actions: {
 

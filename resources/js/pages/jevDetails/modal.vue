@@ -7,7 +7,7 @@
                 <button
                    type="button"
                     class="btn-close"
-                    @click="close_modal()"
+                    @click="close()"
                     aria-label="Close"
                 ></button>
             </div>
@@ -87,7 +87,7 @@
                         <button
                             type="button"
                             class="btn btn-secondary"
-                            @click="close_modal()"
+                            @click="close()"
                         >
                             Close
                         </button>
@@ -151,7 +151,7 @@ export default {
     computed: {
         ...mapState({
              editDetailsModal: state => state.editDetailsModal,
-             editjev: state => state.editData,
+             editjev: state => state.editjevdData,
              fromTotalState: state => state.totalSum,
         }),
     },
@@ -176,29 +176,28 @@ export default {
         },
 
         save_edit() {
-             if (this.formData.FDEBIT != this.formData.FCREDIT) {
-                 this.$snotify.error('Make sure the Debit and Credit are Equal');
-             } else {
                  if ( this.is_edit() ){
                     axios.post('update_jdetails', this.formData).then( response => {
                         this.$snotify.success("Record added", "success!");
                         this.$store.commit('refreshTheTable')
-                        this.close_modal()
+                        this.close()
                     })
                 } else {
                     axios.post('store_jdetails', this.formData).then( response => {
                         this.$snotify.success("Record Added", "Success!");
                         this.$store.commit('refreshTheTable')
-                        this.close_modal()
+                        this.close()
                     })
                 }
-             }
         },
 
-        close_modal() {
+        close() {
+            if (this.sum.totalDebit != this.sum.totalCredit) {
+                 this.$snotify.error('Make sure the Debit and Credit are Equal');
+             } else {
             this.myModal2.hide()
             this.$store.commit('setDetailsModalState', {title:"", isTrue:false})
-            
+             }
         },
 
         is_edit() {
