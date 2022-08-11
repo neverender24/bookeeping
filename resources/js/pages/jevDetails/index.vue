@@ -238,7 +238,7 @@ export default {
             { width: "10%", label: "Debit", name: "FDEBIT"},
             { width: "10%", label: "Credit", name: "FCREDIT"},
             { width: "10%", label: "Remarks", name: "FREMARKS"},
-            { width: "10%", label: "Action", name: "Action"},
+            // { width: "10%", label: "Action", name: "Action"},
             
         ];
 
