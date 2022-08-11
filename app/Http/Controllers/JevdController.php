@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Jevd;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Psy\Command\WhereamiCommand;
 use SebastianBergmann\Environment\Console;
 
 class JevdController extends Controller
@@ -142,6 +143,7 @@ class JevdController extends Controller
                     ->where('jevd.FJEVNO','=',$request->FJEVNO)
                     ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
                     ->where('jevd.fiscalyear','=',$request->fiscalyear)
+                    ->orderBy('jevd.FACTCODE')
                     ->groupBy('recid')
                     ->get();
         
@@ -153,34 +155,84 @@ class JevdController extends Controller
     {
         $details = DB::table('jevd')
                     ->select(
-                        'jevd.*',
+                        'jevh.recid',
+                        'jevd.FDEBIT',
+                        'jevd.FUND_SCODE',
+                        'jevd.FCREDIT',
+                        'jevd.fiscalyear',
+                        'jevd.FJEVNO',
+                        'jevd.FACTCODE',
                         'jevh.FJEVTYP',
                         'jevh.FPAYEE',
                         'jevh.FJEVDATE',
                         'funds_details.FUNDDETAIL_NAME',
-                        DB::raw('FORMAT(jevd.FCREDIT, 2) as jevdCredit, FORMAT(jevd.FDEBIT, 2) as jevdDebit'),
-                    //     DB::raw('CASE WHEN jevd.FDEBIT = (jevd.FACTCODE=10101010) THEN jevd.FDEBIT ELSE NULL END AS debit10101010,
-                    //     CASE WHEN jevd.FCREDIT = (jevd.FACTCODE=40102080) then jevd.FCREDIT ELSE NULL END AS credit40102080,
-                    //     CASE WHEN jevd.FCREDIT = (jevd.FACTCODE=40102040) then jevd.FCREDIT ELSE NULL END AS credit40102040,
-                    //     CASE WHEN jevd.FCREDIT = (jevd.FACTCODE=40102050) then jevd.FCREDIT ELSE NULL END AS credit40102050,' 
-                    // ),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=10101010 THEN jevd.FDEBIT else null END) as debit101'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=40102080 THEN jevd.FCREDIT else null END) as credit080'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=40102040 THEN jevd.FCREDIT else null END) as credit040'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=40102050 THEN jevd.FCREDIT else null END) as credit050'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=40201040 THEN jevd.FCREDIT else null END) as credit1040'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=40202200 THEN jevd.FCREDIT else null END) as credit2200'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=10102010 THEN jevd.FDEBIT else null END) as debit2010'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=10201010 THEN jevd.FDEBIT else null END) as debit201010'),
+                        DB::raw('SUM(CASE WHEN jevd.FACTCODE=10101010 THEN jevd.FCREDIT else null END) as credit101010'),
 
-                        
+                    )
+
+                    ->leftJoin('jevh', function($query){
+                        $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
+                        ->on('jevh.FJEVNO', '=', 'jevd.FJEVNO')
+                        ->on('jevh.fiscalyear', '=', 'jevd.fiscalyear');                     
+                    })
+
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE','=', 'funds_details.FUND_SCODE')
+                    ->where('jevh.FJEVTYP','=',$request->FJEVTYP)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->whereBetween('jevh.FJEVDATE',[$request->from,$request->to])
+                    ->groupBy('jevd.FJEVNO','jevh.FJEVDATE','jevh.FPAYEE')
+                    ->orderBy('FJEVNO')
+                    ->get();
+
+            return $details;
+    }
+
+    public function jevdtypeSubset(Request $request){
+        $subset = DB::table('jevd')
+                    ->select(
+                        'jevd.FPRNO',
+                        'jevd.FDEBIT',
+                        'jevd.FUND_SCODE',
+                        'jevd.FCREDIT',
+                        'jevd.fiscalyear',
+                        'jevd.FJEVNO',
+                        'jevd.FACTCODE',
+                        'jevh.FJEVTYP',
+                        'jevh.FPAYEE',
+                        'jevh.FJEVDATE',
                     )
                     ->leftJoin('jevh', function($query){
                         $query->on('jevh.FUND_SCODE', '=', 'jevd.FUND_SCODE')
                         ->on('jevh.FJEVNO', '=', 'jevd.FJEVNO')
                         ->on('jevh.fiscalyear', '=', 'jevd.fiscalyear');                     
                     })
-                    ->leftJoin('funds_details', 'jevd.FUND_SCODE', 'funds_details.FUND_SCODE', 'jevh.FJEVTYP', 'jevh.FJEVDATE')
-                    ->where('jevh.FJEVTYP','=','2')
-                    ->where('jevd.FUND_SCODE','=','222')
-                    ->whereBetween('jevh.FJEVDATE',['2021-01-01','2021-01-30'])
-                    ->groupBy('jevd.recid')
+                    ->leftJoin('funds_details', 'jevd.FUND_SCODE','=', 'funds_details.FUND_SCODE')
+                    ->where('jevd.FACTCODE','!=','40102080')
+                    ->where('jevd.FACTCODE','!=','40102040')
+                    ->where('jevd.FACTCODE','!=','40202050')
+                    ->where('jevd.FACTCODE','!=','40201040')
+                    ->where('jevd.FACTCODE','!=','40202200')
+                    ->where('jevd.FACTCODE','!=','10101010')
+                    ->where('jevd.FACTCODE','!=','10102010')
+                    ->where('jevd.FACTCODE','!=','10201010')
+                    ->where('jevh.FJEVTYP','=',$request->FJEVTYP)
+                    ->where('jevd.FUND_SCODE','=',$request->FUND_SCODE)
+                    ->where('jevh.recid','=',$request->recid)
+                    ->whereBetween('jevh.FJEVDATE',[$request->from,$request->to])
+                    ->orderBy('jevd.FACTCODE')
                     ->get();
-
-            return $details;
+                    
+        return $subset;           
     }
+
 
     // CRUD
 
