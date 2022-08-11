@@ -13,7 +13,7 @@
                 <div class="form-group row">
                     <div class = "col-3">
                         <div class="form-floating mb-3">
-                            <input type="text" v-model="formdata.FJEVTYP" class="form-control fw-bold"  readonly id="floatingInput">
+                            <input type="text" v-model="jevtype[formdata.FJEVTYP]" class="form-control fw-bold"  readonly id="floatingInput">
                             <label for="floatingInput">JEV TYPE</label>
                         </div>
 
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" v-model="formdata.FDATE" class="form-control fw-bold"  readonly id="floatingInput">
+                            <input type="text" v-model="formdata.FJEVDATE" class="form-control fw-bold"  readonly id="floatingInput">
                             <label for="floatingInput">JEV Date</label>
                         </div>
 
@@ -76,21 +76,14 @@
                         <datatable :columns="columns">
                             <tbody>
                                 <tr v-for="item in data" :key="item.id">
-                                    <td>
-                                        <span v-if="item.FTITLE && item.FACTCODE">
-                                            {{ item.FTITLE }} , ({{ item.FACTCODE }})
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span v-if="item.FSTITLE && item.FSUBCDE">
-                                            {{ item.FSTITLE }} , ({{ item.FSUBCDE }})
-                                        </span>
-                                    </td>
-                                    <td >
-                                        <span v-if="item.FSUBCDE && item.FSTITLE2">
-                                            {{ item.FSTITLE2 }} , ({{ item.FSUBCDE2 }})
-                                        </span> 
-                                    </td>
+                                   
+                                    <td>{{ item.FTITLE}}</td>
+                                    <td>{{ item.FACTCODE}}</td>
+                                    <td>{{ item.FSTITLE}}</td>
+                                    <td>{{ item.FSUBCDE}}</td>
+                                    <td>{{ item.FSTITLE2}}</td>
+                                    <td>{{ item.FSUBCDE2}}</td>
+
                                     <td>{{ item.FRESPCTR}}</td>
                                     <td>{{ item.FVOUCHNO}}</td>
                                     <td>{{ item.FALOBNO}}</td>
@@ -109,12 +102,12 @@
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-end-lg-start" style="font-size: .8125rem">
                                                 <li>
                                                     <button class="dropdown-item" @click="edit_details(item)">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                                                        </svg>Edit
-                                                                    </button>
-                                                    <button class="dropdown-item" @click="delete_jevh(item, item.recid)">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                            </svg>Edit
+                                                        </button>
+                                                    <button class="dropdown-item" @click="delete_details(item, item.recid)">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -179,9 +172,12 @@ export default {
 
         let columns = [
             
-            { width: "10%", label: "Title/ActCode", name: "FACTCODE "},
-            { width: "10%", label: "Title/SubCode", name: "FSTITLE"},
-            { width: "10%", label: "Title/SubCode2", name: "FSTITLE2 "},
+           { width: "10%", label: "ActCode Title", name: "FTITLE "},
+            { width: "10%", label: "ActCode", name: "FACTCODE"},
+            { width: "10%", label: "SubCode Title", name: "FTITLE"},
+            { width: "10%", label: "SubCode", name: "SubCode"},
+            { width: "10%", label: "SubCode2 Title", name: "FTITLE2 "},
+            { width: "10%", label: "SubCode2", name: "SubCode2 "},
             { width: "10%", label: "RespCtr", name: "FRESPCTR"},
             { width: "10%", label: "Voucher", name: "FVOUCHNO"},
             { width: "10%", label: "OBR #", name: "FALOBNO"},
@@ -238,14 +234,14 @@ export default {
     },
 
     mounted() {
-
         this.getData();
+        this.getTotal()
     },
     computed: {
         ...mapState({
+            refreshjevdTable: state => state.refreshjevdTable,
             editDetailsModal: state => state.editDetailsModal,
             sum: state => state.totalSum,
-            refreshTheTable: state => state.refreshTable
 
         }),
 
@@ -255,25 +251,26 @@ export default {
     },
 
     watch: {
-        refreshTheTable: function() {
+        refreshjevdTable: function() {
             this.getData()
+            this.getTotal()
         }
     },
 
     methods: {
-        async create() {
-            this.$store.commit('setDetailsModalState', { title:"Add Journal Entry", isTrue:true})
-        },
         
-
-        close_modal() {
+        close() {
             this.myModal.hide();
             this.$store.commit('setJevhModalState', {title:"", isOpen:false})
             
         },
+        async create() {
+            this.$store.commit('setDetailsModalState', { title:"Add Journal Entry", isTrue:true})
+        },
+            
 
-         async getData(url = "jevd/jevDetails") {
-           
+        async getData(url = "jevd/jevDetails") {
+
             let loader = this.$loading.show();
             await axios.post(url, this.jevdformdata).then((response) => {
                 let data = response.data;
@@ -289,14 +286,24 @@ export default {
         
         },
 
-        async edit_details(item) {
-            this.item = item;
-            await axios.post('edit_jdetails', { id: this.item.recid }).then( response => {
-                this.$store.commit('edit', { title: 'Edit Journal', data:response.data})
+        getTotal() {
+            axios.post('jevd/jevdTotal',  { FJEVNO: this.jevdformdata.FJEVNO , FUND_SCODE:  this.jevdformdata.FUND_SCODE, fiscalyear: this.jevdformdata.fiscalyear }).then(response => {
+                this.$store.commit('total', response.data)
             })
         },
 
-        delete_jevh(item,id) {
+        // async edit_details(item) {
+        //         this.$store.commit('edit', { title: 'Edit Journal', data:item})
+        // },
+
+        async edit_details(item) {
+            this.item = item;
+            await axios.post('edit_jdetails', { id: this.item.recid}).then( response => {
+                this.$store.commit('edit', { title: 'Edit Journal Entry', data:response.data})
+            })
+        },
+
+        delete_details(item,id) {
             this.item = item;
             return this.$snotify.confirm(
                 "Are you sure you want to delete?",
@@ -309,13 +316,14 @@ export default {
                             text: "Yes",
                             action: async (toast) => {
                                 await axios
-                                    .post("/delete_jevh/", { id: id })
+                                    .post("/delete_details/", { id: id })
                                     .then((response) => {
                                         this.$snotify.success(
                                             "Deleted successfully",
                                             "Done"
                                         );
                                         this.$snotify.remove(toast.id);
+                                        this.getTotal();
                                         this.getData();
                                     })
                                     .catch((error) => {
@@ -342,7 +350,3 @@ export default {
 
 }
 </script>
-
-<style>
-
-</style>

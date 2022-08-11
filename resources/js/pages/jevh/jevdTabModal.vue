@@ -139,17 +139,21 @@ export default {
         this.myModal = new Modal(document.getElementById('editJevd'))
         this.myModal.show()
 
+        if ( this.is_edit() ) {
+            this.formData = this.editjevd
+        }
+
        this.getAllDetails(),
        this.getJDetails(),
-       this.getJDetailssubcode()
+       this.getJDetailssubcode(),
+       this.total = this.fromTotalState
     },
 
     computed: {
         ...mapState({
              editDetailsModal: state => state.editDetailsModal,
-             editjev: state => state.editData,
-             
-
+             editjevd: state => state.editjevdData,
+             fromTotalState: state => state.totalSum,
         }),
     },
 
@@ -173,35 +177,28 @@ export default {
         },
 
         save_edit() {
-            if ( this.formData.FCREDIT != this.formData.FDEBIT) {
-                this.$snotify.error("make sure the Debit and Credit are Equal");
-                //  this.$store.commit('refreshTheTable')
-            }else{
-                if ( this.is_edit() ){
+            if (this.is_edit() ) {
                     axios.post('update_jdetails', this.formData).then( response => {
-                        this.$snotify.success("Record added", "success!");
-                        this.$store.commit('refreshTheTable')
-                        this.close_modal()
-                    })
-                }else {
-                axios.post('store_jdetails', this.formData).then( response => {
-                    this.$snotify.success("Record Added", "Success!");
-                     this.$store.commit('refreshTheTable')
+                    this.$snotify.success("Record Added", "Success");
+                    this.$store.commit('refreshjevd')
                     this.close_modal()
                 })
-                    }
-                }
+            } else {
+                axios.post('store_jdetails', this.formData).then( response => {
+                    this.$snotify.success("Record Added", "Success!");
+                    this.$store.commit('refreshjevd')
+                    this.close_modal()
+                })
+            }
         },
 
         close_modal() {
             this.myModal.hide()
-            // this.$store.commit('refreshTheTable')
             this.$store.commit('setDetailsModalState', {title:"", isTrue:false})
-            
         },
 
         is_edit() {
-            return this.editjev.length != 0    
+            return this.editjevd.length != 0    
         }
 
     }
